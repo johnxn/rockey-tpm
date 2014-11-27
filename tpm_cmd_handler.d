@@ -1,0 +1,12 @@
+tpm_cmd_handler.o: tpm\tpm_cmd_handler.c
+tpm_cmd_handler.o: tpm\tpm_commands.h
+tpm_cmd_handler.o: tpm\tpm_structures.h
+tpm_cmd_handler.o: C:\arm\ARM\RV31\INC\stddef.h
+tpm_cmd_handler.o: C:\arm\ARM\RV31\INC\string.h
+tpm_cmd_handler.o: C:\arm\ARM\RV31\INC\stdlib.h
+tpm_cmd_handler.o: tpm\tpm_data.h
+tpm_cmd_handler.o: tpm\tpm_marshalling.h
+tpm_cmd_handler.o: tpm\tpm_handles.h
+tpm_cmd_handler.o: tpm\../crypto/hmac.h
+tpm_cmd_handler.o: C:\arm\ARM\RV31\INC\stdint.h
+tpm_cmd_handler.o: tpm\../crypto/sha1.h

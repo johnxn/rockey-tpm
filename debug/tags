@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CC	Makefile	/^	CC              =gcc$/;"	m
+FALSE	test.c	8;"	d	file:
+TRUE	test.c	7;"	d	file:
+download_bin	test.c	/^void download_bin() {$/;"	f
+keyHandle	test.c	/^DONGLE_HANDLE keyHandle;$/;"	v
+login_rockey	test.c	/^void login_rockey() {$/;"	f
+main	test.c	/^int main(int argc, char **argv) {$/;"	f
+printf_TPM_AUTH_REQ	test.c	/^void printf_TPM_AUTH_REQ(BYTE **ptr, UINT32 *length) {$/;"	f
+printf_TPM_AUTH_RES	test.c	/^void printf_TPM_AUTH_RES(BYTE **ptr, UINT32 *length) {$/;"	f
+printf_TPM_REQUEST	test.c	/^void printf_TPM_REQUEST(BYTE *buf) {$/;"	f
+printf_TPM_RESPONSE	test.c	/^void printf_TPM_RESPONSE(BYTE *buf, TPM_COMMAND_CODE ordinal) {$/;"	f
+printf_buf	test.c	/^void printf_buf(char *head, char *tail, void *buff, int size) {$/;"	f
+run	test.c	/^void run() {$/;"	f
+run_TPM_OIAP	test.c	/^void run_TPM_OIAP() {$/;"	f
+run_TPM_Startup	test.c	/^void run_TPM_Startup() {$/;"	f
+run_bin_file	test.c	/^void run_bin_file(unsigned char *InOutBuf, int size) {$/;"	f
+run_first_time	test.c	/^void run_first_time() {$/;"	f
+stuff_inoutbuf_firsttime	test.c	/^void stuff_inoutbuf_firsttime(unsigned char *InOutBuf, int size) {$/;"	f
+stuff_inoutbuf_oiap	test.c	/^void stuff_inoutbuf_oiap(unsigned char *InOutBuf, int size) {$/;"	f
+stuff_inoutbuf_startup	test.c	/^void stuff_inoutbuf_startup(unsigned char *InOutBuf, int size) {$/;"	f

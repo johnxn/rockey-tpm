@@ -1,0 +1,11 @@
+rsa.o: crypto\rsa.c
+rsa.o: crypto\rsa.h
+rsa.o: C:\arm\ARM\RV31\INC\stddef.h
+rsa.o: C:\arm\ARM\RV31\INC\stdint.h
+rsa.o: crypto\bn.h
+rsa.o: crypto\sha1.h
+rsa.o: C:\arm\ARM\RV31\INC\string.h
+rsa.o: C:\arm\ARM\RV31\INC\stdlib.h
+rsa.o: .\tpm\tpm_commands.h
+rsa.o: .\tpm\tpm_structures.h
+rsa.o: .\tpm\tpm_emulator.h

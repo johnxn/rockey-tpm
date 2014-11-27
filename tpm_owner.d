@@ -1,0 +1,9 @@
+tpm_owner.o: tpm\tpm_owner.c
+tpm_owner.o: tpm\tpm_commands.h
+tpm_owner.o: tpm\tpm_structures.h
+tpm_owner.o: C:\arm\ARM\RV31\INC\stddef.h
+tpm_owner.o: C:\arm\ARM\RV31\INC\string.h
+tpm_owner.o: C:\arm\ARM\RV31\INC\stdlib.h
+tpm_owner.o: tpm\tpm_data.h
+tpm_owner.o: tpm\tpm_handles.h
+tpm_owner.o: .\Core\ftrx.h

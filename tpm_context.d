@@ -1,0 +1,9 @@
+tpm_context.o: tpm\tpm_context.c
+tpm_context.o: tpm\tpm_commands.h
+tpm_context.o: tpm\tpm_structures.h
+tpm_context.o: C:\arm\ARM\RV31\INC\stddef.h
+tpm_context.o: C:\arm\ARM\RV31\INC\string.h
+tpm_context.o: C:\arm\ARM\RV31\INC\stdlib.h
+tpm_context.o: tpm\tpm_data.h
+tpm_context.o: tpm\tpm_handles.h
+tpm_context.o: tpm\tpm_marshalling.h

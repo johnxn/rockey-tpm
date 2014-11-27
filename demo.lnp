@@ -1,0 +1,4 @@
+--cpu Cortex-M0 "startup.o" "main.o" "system.o" "extend.o" ".\Core\RockeyLibc.lib" ".\Core\FTRX.lib" "tpm_cmd_handler.o" "tpm_startup.o" "tpm_data.o" "tpm_handles.o" "tpm_marshalling.o" "tpm_authorization.o" "tpm_context.o" "tpm_eviction.o" "tpm_owner.o" "tpm_storage.o" "hmac.o" "sha1.o" --library_type=microlib --strict --scatter "demo.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\demo.map" -o "demo.axf"

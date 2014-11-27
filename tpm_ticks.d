@@ -1,0 +1,15 @@
+tpm_ticks.o: tpm\tpm_ticks.c
+tpm_ticks.o: tpm\tpm_emulator.h
+tpm_ticks.o: tpm\tpm_commands.h
+tpm_ticks.o: tpm\tpm_structures.h
+tpm_ticks.o: .\crypto\rsa.h
+tpm_ticks.o: C:\arm\ARM\RV31\INC\stddef.h
+tpm_ticks.o: C:\arm\ARM\RV31\INC\stdint.h
+tpm_ticks.o: .\crypto\bn.h
+tpm_ticks.o: tpm\tpm_data.h
+tpm_ticks.o: tpm\tpm_handles.h
+tpm_ticks.o: tpm\tpm_marshalling.h
+tpm_ticks.o: C:\arm\ARM\RV31\INC\string.h
+tpm_ticks.o: tpm\tpm_emulator_extern.h
+tpm_ticks.o: C:\arm\ARM\RV31\INC\inttypes.h
+tpm_ticks.o: C:\arm\ARM\RV31\INC\stdlib.h

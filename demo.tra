@@ -1,0 +1,36 @@
+*** Creating Trace Output File 'demo.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"startup.o"'
+### List of Objects: adding '"main.o"'
+### List of Objects: adding '"system.o"'
+### List of Objects: adding '"extend.o"'
+### List of Objects: adding '".\Core\RockeyLibc.lib"'
+### List of Objects: adding '".\Core\FTRX.lib"'
+### List of Objects: adding '"tpm_cmd_handler.o"'
+### List of Objects: adding '"tpm_startup.o"'
+### List of Objects: adding '"tpm_data.o"'
+### List of Objects: adding '"tpm_handles.o"'
+### List of Objects: adding '"tpm_marshalling.o"'
+### List of Objects: adding '"tpm_authorization.o"'
+### List of Objects: adding '"tpm_context.o"'
+### List of Objects: adding '"tpm_eviction.o"'
+### List of Objects: adding '"tpm_owner.o"'
+### List of Objects: adding '"tpm_storage.o"'
+### List of Objects: adding '"hmac.o"'
+### List of Objects: adding '"sha1.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M0 "startup.o" "main.o" "system.o" "extend.o" ".\Core\RockeyLibc.lib" ".\Core\FTRX.lib" "tpm_cmd_handler.o" "tpm_startup.o" "tpm_data.o" "tpm_handles.o" "tpm_marshalling.o" "tpm_authorization.o" "tpm_context.o" "tpm_eviction.o" "tpm_owner.o" "tpm_storage.o" "hmac.o" "sha1.o" --library_type=microlib --strict --scatter "demo.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\demo.map" -o "demo.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: 'demo.axf'
+### ADS-LD Command File: 'demo.lnp'
+### Checking for dirty Components...
+### Creating CmdFile 'demo.lnp', Handle=0x000002E4
+### Writing '.lnp' file
+### ADS-LD Command file 'demo.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

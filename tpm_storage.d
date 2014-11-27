@@ -1,0 +1,12 @@
+tpm_storage.o: tpm\tpm_storage.c
+tpm_storage.o: tpm\tpm_commands.h
+tpm_storage.o: tpm\tpm_structures.h
+tpm_storage.o: C:\arm\ARM\RV31\INC\stddef.h
+tpm_storage.o: C:\arm\ARM\RV31\INC\string.h
+tpm_storage.o: C:\arm\ARM\RV31\INC\stdlib.h
+tpm_storage.o: tpm\tpm_data.h
+tpm_storage.o: tpm\tpm_handles.h
+tpm_storage.o: tpm\../crypto/sha1.h
+tpm_storage.o: C:\arm\ARM\RV31\INC\stdint.h
+tpm_storage.o: tpm\tpm_marshalling.h
+tpm_storage.o: tpm\../Core/ftrx.h
