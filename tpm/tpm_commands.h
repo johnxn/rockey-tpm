@@ -824,6 +824,13 @@ int tpm_encrypt_private_key(
   BYTE *enc,
   UINT32 *enc_size
 );
+int tpm_encrypt_private_key_new(
+  UINT16 pubkeyFileid,
+  TPM_STORE_ASYMKEY *store,
+  BYTE *enc,
+  UINT32 *enc_size
+);
+
 
 int tpm_decrypt_private_key(
   TPM_KEY_DATA *key,
@@ -831,6 +838,13 @@ int tpm_decrypt_private_key(
   UINT32 enc_size,
   TPM_STORE_ASYMKEY *store
 );
+int tpm_decrypt_private_key_new(
+  UINT16 privkeyFileid,
+  BYTE *enc,
+  UINT32 enc_size,
+  TPM_STORE_ASYMKEY *store
+);
+
 
 int tpm_rsa_decrypt(
     UINT16 keyFileid, 

@@ -49,7 +49,7 @@ TPM_RESULT TPM_Startup(TPM_STARTUP_TYPE startupType)
     int i;
     TPM_NONCE contextNonceSession;
     TPM_PCRVALUE pcrValue;
-    TPM_PCR_ATTRIBUTES pcrAttrib[TPM_NUM_PCR];
+    TPM_PCR_ATTRIBUTES pcrAttribs[TPM_NUM_PCR];
     TPM_KEY_DATA key;
     TPM_NONCE contextNonceKey;
     TPM_NV_DATA_SENSITIVE nvStorage;
@@ -67,9 +67,9 @@ TPM_RESULT TPM_Startup(TPM_STARTUP_TYPE startupType)
         set_nonce_rand(&contextNonceSession);
         write_TPM_STANY_DATA_contextNonceSession(&contextNonceSession);
         /* reset PCR values */
-        read_TPM_PERMANENT_DATA_pcrAttrib(pcrAttrib);
+        read_TPM_PERMANENT_DATA_pcrAttribs(pcrAttribs);
         for (i = 0; i < TPM_NUM_PCR; i++) {
-            if (pcrAttrib[i].pcrReset)
+            if (pcrAttribs[i].pcrReset)
                 SET_TO_0xFF(pcrValue.digest);
             else
                 SET_TO_ZERO(pcrValue.digest);

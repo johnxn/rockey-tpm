@@ -1052,8 +1052,8 @@ typedef struct tdTPM_CERTIFY_INFO {
   sizeof_TPM_KEY_PARMS(s.algorithmParms) + 20 + 20 + 1 + 4 \
   + s.PCRInfoSize \
   + (s.tag == TPM_TAG_CERTIFY_INFO2 ? 4 + s.migrationAuthoritySize : 0))
-//#define free_TPM_CERTIFY_INFO(s) { free_TPM_KEY_PARMS(s.algorithmParms); \
-  if (s.migrationAuthoritySize > 0) tpm_free(s.migrationAuthority); }
+#define free_TPM_CERTIFY_INFO(s) { free_TPM_KEY_PARMS(s.algorithmParms); \
+  if (s.migrationAuthoritySize > 0) free(s.migrationAuthority); }
 
 /*
  * TPM_QUOTE_INFO Structure ([TPM_Part2], Section 11.3)

@@ -112,7 +112,7 @@ void tpm_init_data(void) {
     TPM_DAA_TPM_SEED tpmDAASeed;
     TPM_NONCE ekReset;
     RSA_PRIVATE_KEY prikey;
-    TPM_PCR_ATTRIBUTES pcrAttrib[TPM_NUM_PCR];
+    TPM_PCR_ATTRIBUTES pcrAttribs[TPM_NUM_PCR];
     TPM_VERSION version;
     version.major = 0x01;
     version.minor = 0x02;
@@ -133,22 +133,22 @@ void tpm_init_data(void) {
 
     /* setup PCR attributes */
     for (i = 0; i < TPM_NUM_PCR && i < 16; i++) {
-      init_pcr_attr(pcrAttrib+i, FALSE, 0x00, 0x1f);
+      init_pcr_attr(pcrAttribs+i, FALSE, 0x00, 0x1f);
     }
     if (TPM_NUM_PCR >= 24) {
-      init_pcr_attr(pcrAttrib+16, TRUE, 0x1f, 0x1f);
-      init_pcr_attr(pcrAttrib+17, TRUE, 0x10, 0x1c);
-      init_pcr_attr(pcrAttrib+18, TRUE, 0x10, 0x1c);
-      init_pcr_attr(pcrAttrib+19, TRUE, 0x10, 0x0c);
-      init_pcr_attr(pcrAttrib+20, TRUE, 0x14, 0x0e);
-      init_pcr_attr(pcrAttrib+21, TRUE, 0x04, 0x04);
-      init_pcr_attr(pcrAttrib+22, TRUE, 0x04, 0x04);
-      init_pcr_attr(pcrAttrib+23, TRUE, 0x1f, 0x1f);
+      init_pcr_attr(pcrAttribs+16, TRUE, 0x1f, 0x1f);
+      init_pcr_attr(pcrAttribs+17, TRUE, 0x10, 0x1c);
+      init_pcr_attr(pcrAttribs+18, TRUE, 0x10, 0x1c);
+      init_pcr_attr(pcrAttribs+19, TRUE, 0x10, 0x0c);
+      init_pcr_attr(pcrAttribs+20, TRUE, 0x14, 0x0e);
+      init_pcr_attr(pcrAttribs+21, TRUE, 0x04, 0x04);
+      init_pcr_attr(pcrAttribs+22, TRUE, 0x04, 0x04);
+      init_pcr_attr(pcrAttribs+23, TRUE, 0x1f, 0x1f);
     }
     for (i = 24; i < TPM_NUM_PCR; i++) {
-      init_pcr_attr(pcrAttrib+i, TRUE, 0x00, 0x00);
+      init_pcr_attr(pcrAttribs+i, TRUE, 0x00, 0x00);
     }
-    write_TPM_PERMANENT_DATA_pcrAttrib(pcrAttrib);
+    write_TPM_PERMANENT_DATA_pcrAttribs(pcrAttribs);
     /* set endoresement key */
     write_TPM_PERMANENT_DATA_ekFileid(FILEID_EK);
     rsa_genkey(FILEID_EK, &prikey);
@@ -390,7 +390,7 @@ int read_TPM_PERMANENT_DATA_srk(TPM_KEY_DATA *srk) {
     return read_TPM_PERMANENT_DATA(offset, (BYTE *)srk, sizeof(TPM_KEY_DATA));
 }
 
-int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET usageAuth) {
+int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET *usageAuth) {
     UINT16 offset = PERM_DATA_OFFSET_SRK + offsetof(TPM_KEY_DATA, usageAuth);
     return read_TPM_PERMANENT_DATA(offset, (BYTE *)usageAuth, sizeof(TPM_SECRET));
 }
@@ -476,12 +476,22 @@ int read_TPM_PERMANENT_DATA_keys_usageAuth(UINT16 index, TPM_SECRET *usageAuth) 
     return read_TPM_PERMANENT_DATA(offset, (BYTE *)usageAuth , sizeof(TPM_SECRET));
 }
 
-int write_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttribs) {
+int write_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttribs) {
     return write_TPM_PERMANENT_DATA(PERM_DATA_OFFSET_PCRATTRIB, (BYTE *)pcrAttribs, sizeof(TPM_PCR_ATTRIBUTES) * TPM_NUM_PCR);
 }
 
-int read_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttribs) {
+int read_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttribs) {
     return read_TPM_PERMANENT_DATA(PERM_DATA_OFFSET_PCRATTRIB, (BYTE *)pcrAttribs, sizeof(TPM_PCR_ATTRIBUTES) * TPM_NUM_PCR);
+}
+
+int write_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib) {
+    UINT16 offset = offsetof(TPM_PERMANENT_DATA, pcrAttrib[index]);
+    return write_TPM_PERMANENT_DATA(offset, (BYTE *)pcrAttrib, sizeof(TPM_PCR_ATTRIBUTES));
+}
+
+int read_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib) {
+    UINT16 offset = offsetof(TPM_PERMANENT_DATA, pcrAttrib[index]);
+    return read_TPM_PERMANENT_DATA(offset, (BYTE *)pcrAttrib, sizeof(TPM_PCR_ATTRIBUTES));
 }
 
 int write_TPM_PERMANENT_DATA_ekFileid(UINT16 ekFileid) {
@@ -560,8 +570,13 @@ int write_TPM_PERMANENT_DATA_cmd_durations(UINT32 *cmd_durations) {
 }
 
 int write_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue) {
-    return write_TPM_PERMANENT_DATA(PERM_DATA_OFFSET_PCRVALUE + \
-            index*sizeof(TPM_PCRVALUE), (BYTE *)pcrValue, sizeof(TPM_PCRVALUE));
+    UINT16 offset = offsetof(TPM_PERMANENT_DATA, pcrValue[index]);
+    return write_TPM_PERMANENT_DATA(offset, (BYTE *)pcrValue, sizeof(TPM_PCRVALUE));
+}
+
+int read_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue) {
+    UINT16 offset = offsetof(TPM_PERMANENT_DATA, pcrValue[index]);
+    return read_TPM_PERMANENT_DATA(offset, (BYTE *)pcrValue, sizeof(TPM_PCRVALUE));
 }
 
 /* TPM_STCLEAR_DATA read and write functions */

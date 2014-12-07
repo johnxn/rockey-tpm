@@ -1,0 +1,1 @@
+-c --cpu Cortex-M0 -D__EVAL -D__MICROLIB -g -O2 --apcs=interwork -I..\ -I.\Core -I.\tpm -I.\crypto -I "C:\arm\ARM\INC" -I "C:\arm\ARM\INC\ARM" -o "tpm_integrity.o" --omf_browse "tpm_integrity.crf" --depend "tpm_integrity.d" "tpm\tpm_integrity.c"

@@ -22,6 +22,7 @@
 #include "../crypto/hmac.h"
 #include "../crypto/sha1.h"
 
+extern unsigned char InOutBuf[0x400];
 extern unsigned char ExtendBuf[0x400];
 
 UINT32 tpm_get_in_param_offset(TPM_COMMAND_CODE ordinal)
@@ -299,6 +300,22 @@ static TPM_RESULT execute_TPM_SaveState(TPM_REQUEST *req, TPM_RESPONSE *rsp)
     return TPM_SaveState();
 }
 
+static TPM_RESULT execute_TPM_FlushSpecific(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_HANDLE handle;
+  TPM_RESOURCE_TYPE resourceType;
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_HANDLE(&ptr, &len, &handle)
+      || tpm_unmarshal_TPM_RESOURCE_TYPE(&ptr, &len, &resourceType)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  return TPM_FlushSpecific(handle, resourceType);
+}
+
 static TPM_RESULT execute_TPM_OIAP(TPM_REQUEST *req, TPM_RESPONSE *rsp)
 {
     BYTE *ptr;
@@ -465,7 +482,7 @@ static TPM_RESULT execute_TPM_LoadKey2(TPM_REQUEST *req, TPM_RESPONSE *rsp)
 {
   BYTE *ptr;
   UINT32 len;
-  TPM_KEY_HANDLE parentHandle;
+  TPM_KEY_HANDLE parentHandle;		 
   TPM_KEY inKey;
   TPM_KEY_HANDLE inkeyHandle;
   TPM_RESULT res;
@@ -556,6 +573,175 @@ static TPM_RESULT execute_TPM_UnBind(TPM_REQUEST *req, TPM_RESPONSE *rsp)
 }
 
 
+static TPM_RESULT execute_TPM_MakeIdentity(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_ENCAUTH identityAuth;
+  TPM_CHOSENID_HASH labelPrivCADigest;
+  TPM_KEY idKeyParams;
+  TPM_KEY idKey;
+  UINT32 identityBindingSize;
+  BYTE *identityBinding = NULL;
+  TPM_RESULT res;
+  /* compute parameter digest */
+  tpm_compute_in_param_digest(req);
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_ENCAUTH(&ptr, &len, &identityAuth)
+      || tpm_unmarshal_TPM_CHOSENID_HASH(&ptr, &len, &labelPrivCADigest)
+      || tpm_unmarshal_TPM_KEY(&ptr, &len, &idKeyParams)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  res = TPM_MakeIdentity(&identityAuth, &labelPrivCADigest, &idKeyParams, 
+    &req->auth1, &req->auth2, &idKey, &identityBindingSize, &identityBinding);
+  if (res != TPM_SUCCESS) return res;
+  /* marshal output */
+  rsp->paramSize = len = sizeof_TPM_KEY(idKey) + 4 + identityBindingSize;
+  rsp->param = ptr = ExtendBuf;
+  if (tpm_marshal_TPM_KEY(&ptr, &len, &idKey)
+      || tpm_marshal_UINT32(&ptr, &len, identityBindingSize)
+      || tpm_marshal_BLOB(&ptr, &len, identityBinding, identityBindingSize)) {
+    res = TPM_FAIL;
+  }
+  return res;
+}
+
+
+static TPM_RESULT execute_TPM_CertifyKey(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_KEY_HANDLE certHandle;
+  TPM_KEY_HANDLE keyHandle;
+  TPM_NONCE antiReplay;
+  TPM_CERTIFY_INFO certifyInfo;
+  UINT32 outDataSize;
+  BYTE *outData = NULL;
+  TPM_RESULT res;
+  /* compute parameter digest */
+  tpm_compute_in_param_digest(req);
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &len, &certHandle)
+      || tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &len, &keyHandle)
+      || tpm_unmarshal_TPM_NONCE(&ptr, &len, &antiReplay)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  res = TPM_CertifyKey(certHandle, keyHandle, &antiReplay, &req->auth1, 
+    &req->auth2, &certifyInfo, &outDataSize, &outData);
+  if (res != TPM_SUCCESS) return res;
+  /* marshal output */
+  rsp->paramSize = len = sizeof_TPM_CERTIFY_INFO(certifyInfo) + 4 + outDataSize;
+  rsp->param = ptr = ExtendBuf;
+  if (ptr == NULL
+      || tpm_marshal_TPM_CERTIFY_INFO(&ptr, &len, &certifyInfo)
+      || tpm_marshal_UINT32(&ptr, &len, outDataSize)
+      || tpm_marshal_BLOB(&ptr, &len, outData, outDataSize)) {
+    free(rsp->param);
+    res = TPM_FAIL;
+  }
+  free_TPM_CERTIFY_INFO(certifyInfo);
+  free(outData);
+  return res;
+}
+
+
+static TPM_RESULT execute_TPM_Extend(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_PCRINDEX pcrNum;
+  TPM_DIGEST inDigest;
+  TPM_PCRVALUE outDigest;
+  TPM_RESULT res;
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_PCRINDEX(&ptr, &len, &pcrNum)
+      || tpm_unmarshal_TPM_DIGEST(&ptr, &len, &inDigest)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  res = TPM_Extend(pcrNum, &inDigest, &outDigest);
+  if (res != TPM_SUCCESS) return res;
+  /* marshal output */
+  rsp->paramSize = len = 20;
+  rsp->param = ptr = ExtendBuf;
+  if (ptr == NULL												
+      || tpm_marshal_TPM_PCRVALUE(&ptr, &len, &outDigest)) {
+    free(rsp->param);
+    res = TPM_FAIL;
+  }
+  return res;
+}
+
+static TPM_RESULT execute_TPM_PCRRead(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_PCRINDEX pcrIndex;
+  TPM_PCRVALUE outDigest;
+  TPM_RESULT res;
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_PCRINDEX(&ptr, &len, &pcrIndex)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  res = TPM_PCRRead(pcrIndex, &outDigest);
+  if (res != TPM_SUCCESS) return res;
+  /* marshal output */
+  rsp->paramSize = len = 20;
+  rsp->param = ptr = ExtendBuf;
+  if (ptr == NULL
+      || tpm_marshal_TPM_PCRVALUE(&ptr, &len, &outDigest)) {
+    free(rsp->param);
+    res = TPM_FAIL;
+  }
+  return res;
+}
+
+static TPM_RESULT execute_TPM_Quote(TPM_REQUEST *req, TPM_RESPONSE *rsp)
+{
+  BYTE *ptr;
+  UINT32 len;
+  TPM_KEY_HANDLE keyHandle;
+  TPM_NONCE extrnalData;
+  TPM_PCR_SELECTION targetPCR;
+  TPM_PCR_COMPOSITE *pcrData;
+  UINT32 sigSize;
+  BYTE *sig = NULL;
+  TPM_RESULT res;
+  pcrData = (TPM_PCR_COMPOSITE *)InOutBuf;
+  /* compute parameter digest */
+  tpm_compute_in_param_digest(req);
+  /* unmarshal input */
+  ptr = req->param;
+  len = req->paramSize;
+  if (tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &len, &keyHandle)
+      || tpm_unmarshal_TPM_NONCE(&ptr, &len, &extrnalData)
+      || tpm_unmarshal_TPM_PCR_SELECTION(&ptr, &len, &targetPCR)
+      || len != 0) return TPM_BAD_PARAMETER;
+  /* execute command */
+  res = TPM_Quote(keyHandle, &extrnalData, &targetPCR, &req->auth1, pcrData, &sigSize, &sig);
+  if (res != TPM_SUCCESS) return res;
+  /* marshal output */
+  rsp->paramSize = len = sizeof_TPM_PCR_COMPOSITE((*pcrData)) + 4 + sigSize;
+  rsp->param = ptr = ExtendBuf;
+  if (ptr == NULL
+      || tpm_marshal_TPM_PCR_COMPOSITE(&ptr, &len, pcrData)
+      || tpm_marshal_UINT32(&ptr, &len, sigSize)
+      || tpm_marshal_BLOB(&ptr, &len, sig, sigSize)) {
+    free(rsp->param);
+    res = TPM_FAIL;
+  }
+  free(sig);
+  return res;
+}
+
+
 void tpm_execute_command(TPM_REQUEST *req, TPM_RESPONSE *rsp)
 {
     TPM_RESULT res;
@@ -599,6 +785,9 @@ void tpm_execute_command(TPM_REQUEST *req, TPM_RESPONSE *rsp)
         case TPM_ORD_SaveState:
             res = execute_TPM_SaveState(req, rsp);
             break;
+        case TPM_ORD_FlushSpecific:
+            res = execute_TPM_FlushSpecific(req, rsp);
+            break;
         case TPM_ORD_OIAP:
             res = execute_TPM_OIAP(req, rsp);
             break;
@@ -622,6 +811,21 @@ void tpm_execute_command(TPM_REQUEST *req, TPM_RESPONSE *rsp)
             break;
         case TPM_ORD_UnBind:
             res = execute_TPM_UnBind(req, rsp);
+            break;
+        case TPM_ORD_MakeIdentity:
+            res = execute_TPM_MakeIdentity(req, rsp);
+            break;
+        case TPM_ORD_CertifyKey:
+            res = execute_TPM_CertifyKey(req, rsp);
+            break;
+        case TPM_ORD_Extend:
+            res = execute_TPM_Extend(req, rsp);
+            break;
+        case TPM_ORD_PCRRead:
+            res = execute_TPM_PCRRead(req, rsp);
+            break;
+        case TPM_ORD_Quote:
+            res = execute_TPM_Quote(req, rsp);
             break;
         default:
             tpm_setup_error_response(TPM_BAD_ORDINAL, rsp);
@@ -651,10 +855,7 @@ void tpm_execute_command(TPM_REQUEST *req, TPM_RESPONSE *rsp)
         TPM_FlushSpecific(read_TPM_STANY_DATA_transExclusive(), TPM_RT_TRANS);
         stanyFlags.transportExclusive = FALSE;
     }
-
-
 }
-
 
 int tpm_handle_command(const unsigned char *in, unsigned int in_size, unsigned char *out, unsigned int *out_size)
 {

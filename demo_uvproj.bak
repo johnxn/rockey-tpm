@@ -642,6 +642,11 @@
               <FileType>1</FileType>
               <FilePath>.\tpm\tpm_owner.c</FilePath>
             </File>
+            <File>
+              <FileName>tpm_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tpm\tpm_storage.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

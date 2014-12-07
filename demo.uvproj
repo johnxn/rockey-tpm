@@ -647,6 +647,21 @@
               <FileType>1</FileType>
               <FilePath>.\tpm\tpm_storage.c</FilePath>
             </File>
+            <File>
+              <FileName>tpm_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tpm\tpm_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>tpm_identity.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tpm\tpm_identity.c</FilePath>
+            </File>
+            <File>
+              <FileName>tpm_integrity.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tpm\tpm_integrity.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

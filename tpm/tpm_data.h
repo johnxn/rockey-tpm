@@ -142,7 +142,9 @@ int write_TPM_PERMANENT_DATA_srk(TPM_KEY_DATA *srk);
 int read_TPM_PERMANENT_DATA_srk(TPM_KEY_DATA *srk);
 int write_TPM_PERMANENT_DATA_srk_payload(BYTE payload);
 BYTE read_TPM_PERMANENT_DATA_srk_payload(void);
-int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET usageAuth);
+int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET *usageAuth);
+UINT16 read_TPM_PERMANENT_DATA_srk_pubkeyFileid(void);
+UINT16 read_TPM_PERMANENT_DATA_srk_keyFileid(void);
 
 
 int write_TPM_PERMANENT_DATA_contextKey(BYTE *contextKey);
@@ -158,8 +160,11 @@ int read_TPM_PERMANENT_DATA_counters(UINT16 index, TPM_COUNTER_VALUE *counters);
 int read_TPM_PERMANENT_DATA_counters_usageAuth(UINT16 index, TPM_SECRET *usageAuth);
 int write_TPM_PERMANENT_DATA_counters_valid(UINT16 index, BOOL valid);
 BOOL read_TPM_PERMANENT_DATA_counters_valid(UINT16 index);
-int write_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttrib);
-int read_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttrib);
+int write_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttrib);
+int read_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttrib);
+
+int write_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib);
+int read_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib);
 int write_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue);
 int read_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue);
 int write_TPM_PERMANENT_DATA_ordinalAuditStatus(BYTE *ordinalAuditStatus);

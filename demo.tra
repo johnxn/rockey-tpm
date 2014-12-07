@@ -17,17 +17,20 @@
 ### List of Objects: adding '"tpm_eviction.o"'
 ### List of Objects: adding '"tpm_owner.o"'
 ### List of Objects: adding '"tpm_storage.o"'
+### List of Objects: adding '"tpm_crypto.o"'
+### List of Objects: adding '"tpm_identity.o"'
+### List of Objects: adding '"tpm_integrity.o"'
 ### List of Objects: adding '"hmac.o"'
 ### List of Objects: adding '"sha1.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M0 "startup.o" "main.o" "system.o" "extend.o" ".\Core\RockeyLibc.lib" ".\Core\FTRX.lib" "tpm_cmd_handler.o" "tpm_startup.o" "tpm_data.o" "tpm_handles.o" "tpm_marshalling.o" "tpm_authorization.o" "tpm_context.o" "tpm_eviction.o" "tpm_owner.o" "tpm_storage.o" "hmac.o" "sha1.o" --library_type=microlib --strict --scatter "demo.sct" 
+--cpu Cortex-M0 "startup.o" "main.o" "system.o" "extend.o" ".\Core\RockeyLibc.lib" ".\Core\FTRX.lib" "tpm_cmd_handler.o" "tpm_startup.o" "tpm_data.o" "tpm_handles.o" "tpm_marshalling.o" "tpm_authorization.o" "tpm_context.o" "tpm_eviction.o" "tpm_owner.o" "tpm_storage.o" "tpm_crypto.o" "tpm_identity.o" "tpm_integrity.o" "hmac.o" "sha1.o" --library_type=microlib --strict --scatter "demo.sct" 
 --autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list ".\demo.map" -o "demo.axf"### Preparing Environment (PrepEnvAds)
 ### ADS-LD Output File: 'demo.axf'
 ### ADS-LD Command File: 'demo.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'demo.lnp', Handle=0x000002E4
+### Creating CmdFile 'demo.lnp', Handle=0x00000290
 ### Writing '.lnp' file
 ### ADS-LD Command file 'demo.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

@@ -61,7 +61,7 @@ TPM_RESULT TPM_FlushSpecific(TPM_HANDLE handle, TPM_RESOURCE_TYPE resourceType)
                 if (read_TPM_PERMANENT_DATA_keys_keyControl(key_index) & TPM_KEY_CONTROL_OWNER_EVICT)
                     return TPM_KEY_OWNER_CONTROL;
                 if (handle == SRK_HANDLE) return TPM_FAIL;
-                write_TPM_PERMANENT_DATA_keys_zero(key_index);
+                write_TPM_PERMANENT_DATA_keys_payload(key_index, 0);
                 tpm_invalidate_sessions(handle);
             }
             return TPM_SUCCESS;

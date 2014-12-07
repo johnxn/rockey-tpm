@@ -108,7 +108,7 @@ void printf_TPM_REQUEST(BYTE *buf) {
             TPM_KEY inKey;
             tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &parentHandle);
             tpm_unmarshal_TPM_KEY(&ptr, &length, &inKey);
-            printf("TPM_KEY_HANDLE parentHandle: %x\n", parentHandle);
+            printf("TPM_KEY_HANDLE parentHandle: 0x%x\n", parentHandle);
             printf_TPM_KEY(&inKey);
             break;
         }
@@ -117,11 +117,61 @@ void printf_TPM_REQUEST(BYTE *buf) {
             UINT32 inDataSize;
             tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &keyHandle);
             tpm_unmarshal_UINT32(&ptr, &length, &inDataSize);
-            printf("TPM_KEY_HANDLE keyHandle: %x\n", keyHandle);
+            printf("TPM_KEY_HANDLE keyHandle: 0x%x\n", keyHandle);
             printf("UINT32 inDataSize :%x\n", inDataSize);
             printf_buf("BYTE inData:", ptr, inDataSize);
             ptr += inDataSize;
             length -= inDataSize;
+            break;
+        }
+        case TPM_ORD_MakeIdentity: {
+            TPM_ENCAUTH identityAuth;
+            TPM_CHOSENID_HASH labelPrivCADigest;
+            TPM_KEY idKeyParams;
+            tpm_unmarshal_TPM_ENCAUTH(&ptr, &length, &identityAuth);
+            tpm_unmarshal_TPM_CHOSENID_HASH(&ptr, &length, &labelPrivCADigest);
+            tpm_unmarshal_TPM_KEY(&ptr, &length, &idKeyParams);
+            printf_buf("TPM_ENCAUTH identityAuth:", identityAuth, sizeof(TPM_ENCAUTH));
+            printf_buf("TPM_CHOSENID_HASH labelPrivCADigest:", &labelPrivCADigest, sizeof(TPM_CHOSENID_HASH));
+            break;
+        }
+        case TPM_ORD_CertifyKey: {
+            TPM_KEY_HANDLE certHandle;
+            TPM_KEY_HANDLE keyHandle;
+            TPM_NONCE antiReplay;
+            tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &certHandle);
+            tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &keyHandle);
+            tpm_unmarshal_TPM_NONCE(&ptr, &length, &antiReplay);
+            printf("TPM_KEY_HANDLE certHandle: 0x%x\n", certHandle);
+            printf("TPM_KEY_HANDLE keyHandle: 0x%x\n", keyHandle);
+            printf_buf("TPM_NONCE antiReplay:", antiReplay.nonce, sizeof(TPM_NONCE));
+            break;
+        }
+        case TPM_ORD_Extend: {
+            TPM_PCRINDEX pcrNum;
+            TPM_DIGEST inDigest;
+            tpm_unmarshal_TPM_PCRINDEX(&ptr, &length, &pcrNum);
+            tpm_unmarshal_TPM_DIGEST(&ptr, &length, &inDigest);
+            printf("TPM_PCRINDEX pcrNum: 0x%x\n", pcrNum);
+            printf_buf("TPM_DIGEST inDigest: ", inDigest.digest, sizeof(TPM_DIGEST));
+            break;
+        }
+        case TPM_ORD_PCRRead: {
+            TPM_PCRINDEX pcrIndex;
+            tpm_unmarshal_TPM_PCRINDEX(&ptr, &length, &pcrIndex);
+            printf("TPM_PCRINDEX pcrIndex: 0x%x\n", pcrIndex);
+            break;
+        }
+       case TPM_ORD_Quote: {
+            TPM_KEY_HANDLE keyHandle;
+            TPM_NONCE externalData;
+            TPM_PCR_SELECTION targetPCR;
+            tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &keyHandle);
+            tpm_unmarshal_TPM_NONCE(&ptr, &length, &externalData);
+            tpm_unmarshal_TPM_PCR_SELECTION(&ptr, &length, &targetPCR);
+            printf("TPM_KEY_HANDLE keyHandle: 0x%x\n", keyHandle);
+            printf_buf("TPM_NONCE externalData:", externalData.nonce, sizeof(TPM_NONCE));
+            printf_TPM_PCR_SELECTION(&targetPCR);
             break;
         }
         default:
@@ -159,62 +209,132 @@ void printf_TPM_RESPONSE(BYTE const *buf, TPM_COMMAND_CODE ordinal) {
     printf("TPM_RESULT res: 0x%x\n", res);
     switch (ordinal) {
         case TPM_ORD_OIAP: {
-            TPM_AUTHHANDLE authHandle;
-            TPM_NONCE nonceEven;
-            tpm_unmarshal_TPM_AUTHHANDLE(&ptr, &length, &authHandle);
-            tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEven);
-            printf("TPM_AUTHHANDLE authHandle: 0x%x\n", authHandle);
-            printf_buf("TPM_NONCE nonceEven: ", &nonceEven, sizeof(TPM_NONCE));
+            if (res == TPM_SUCCESS) {
+                TPM_AUTHHANDLE authHandle;
+                TPM_NONCE nonceEven;
+                tpm_unmarshal_TPM_AUTHHANDLE(&ptr, &length, &authHandle);
+                tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEven);
+                printf("TPM_AUTHHANDLE authHandle: 0x%x\n", authHandle);
+                printf_buf("TPM_NONCE nonceEven: ", &nonceEven, sizeof(TPM_NONCE));
+            }
             break;
         }
         case TPM_ORD_OSAP: { 
-            TPM_AUTHHANDLE authHandle;
-            TPM_NONCE nonceEven;
-            TPM_NONCE nonceEvenOSAP;
-            tpm_unmarshal_TPM_AUTHHANDLE(&ptr, &length, &authHandle);
-            tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEven);
-            tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEvenOSAP);
-            printf("TPM_AUTHHANDLE authHandle: 0x%x\n", authHandle);
-            printf_buf("TPM_NONCE nonceEven: ", &nonceEven, sizeof(TPM_NONCE));
-            printf_buf("TPM_NONCE nonceEvenOSAP: ", &nonceEvenOSAP, sizeof(TPM_NONCE));
+            if (res == TPM_SUCCESS) {
+                TPM_AUTHHANDLE authHandle;
+                TPM_NONCE nonceEven;
+                TPM_NONCE nonceEvenOSAP;
+                tpm_unmarshal_TPM_AUTHHANDLE(&ptr, &length, &authHandle);
+                tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEven);
+                tpm_unmarshal_TPM_NONCE(&ptr, &length, &nonceEvenOSAP);
+                printf("TPM_AUTHHANDLE authHandle: 0x%x\n", authHandle);
+                printf_buf("TPM_NONCE nonceEven: ", &nonceEven, sizeof(TPM_NONCE));
+                printf_buf("TPM_NONCE nonceEvenOSAP: ", &nonceEvenOSAP, sizeof(TPM_NONCE));
+            }
             break;
         }
         case TPM_ORD_TakeOwnership: {
-            TPM_KEY srkPub;
-            tpm_unmarshal_TPM_KEY(&ptr, &length, &srkPub);
+            if (res == TPM_SUCCESS) {
+                TPM_KEY srkPub;
+                tpm_unmarshal_TPM_KEY(&ptr, &length, &srkPub);
+            }
             break;
         }
         case TPM_ORD_CreateWrapKey: {
-            TPM_KEY wrappedKey;
-            tpm_unmarshal_TPM_KEY(&ptr, &length, &wrappedKey);
-            printf_buf("Public portion of WrappedKey:", wrappedKey.pubKey.key, sizeof(RSA_PUBLIC_KEY));
-            printf_buf("Encrypted private portion of WrappedKey:", wrappedKey.encData, wrappedKey.encDataSize);
-            /*
-            unsigned char buf[512];
-            UINT16 outputSize = 256;
-            decrypt_with_prikey(FILEID_SRK, wrappedKey.encData, 256, buf, &outputSize);
-            printf("Par1 decrypted size: %d\n", outputSize);
-            UINT16 outputSize2 = 256;
-            decrypt_with_prikey(FILEID_SRK, (wrappedKey.encData)+256, 256, buf+outputSize, &outputSize2);
-            printf("Par2 decrypted size: %d\n", outputSize2);
-            printf_buf("Decrypted private key is:", buf, outputSize  + outputSize2);
-            */
+            if (res == TPM_SUCCESS) {
+                TPM_KEY wrappedKey;
+                tpm_unmarshal_TPM_KEY(&ptr, &length, &wrappedKey);
+                printf_buf("Public portion of WrappedKey:", wrappedKey.pubKey.key, sizeof(RSA_PUBLIC_KEY));
+                printf_buf("Encrypted private portion of WrappedKey:", wrappedKey.encData, wrappedKey.encDataSize);
+            }
             break;
         }
         case TPM_ORD_LoadKey: {
-            TPM_KEY_HANDLE keyHandle;
-            tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &keyHandle);
-            printf("TPM_KEY_HANDLE inkeyHandle: %x\n", keyHandle);
+            if (res == TPM_SUCCESS) {
+                TPM_KEY_HANDLE keyHandle;
+                tpm_unmarshal_TPM_KEY_HANDLE(&ptr, &length, &keyHandle);
+                printf("TPM_KEY_HANDLE inkeyHandle: 0x%x\n", keyHandle);
+            }
             break;
         }
         case TPM_ORD_UnBind: {
-            UINT32 outDataSize;
-            tpm_unmarshal_UINT32(&ptr, &length, &outDataSize);
-            printf("UINT32 outDataSize: %x\n", outDataSize);
-            printf_buf("BYTE outData", ptr, outDataSize);
-            ptr += outDataSize;
-            length -= outDataSize;
+            if (res == TPM_SUCCESS) {
+                UINT32 outDataSize;
+                tpm_unmarshal_UINT32(&ptr, &length, &outDataSize);
+                printf("UINT32 outDataSize: 0x%x\n", outDataSize);
+                printf_buf("BYTE outData", ptr, outDataSize);
+                ptr += outDataSize;
+                length -= outDataSize;
+            }
+            break;
         }
+        case TPM_ORD_MakeIdentity: {
+            if (res == TPM_SUCCESS) {
+                TPM_KEY idKey;
+                UINT32 identityBindingSize;
+                tpm_unmarshal_TPM_KEY(&ptr, &length, &idKey);
+                tpm_unmarshal_UINT32(&ptr, &length, &identityBindingSize);
+                printf_buf("Public portion of idKey:", idKey.pubKey.key, sizeof(RSA_PUBLIC_KEY));
+                printf_buf("Encrypted private portion of idKey:", idKey.encData, idKey.encDataSize);
+                printf("UINT32 identityBindingSize: 0x%x\n", identityBindingSize);
+                printf_buf("BYTE identityBinding:", ptr, identityBindingSize);
+                ptr += identityBindingSize;
+                length -= identityBindingSize;
+            }
+            break;
+        }
+        case TPM_ORD_CertifyKey: {
+            if (res == TPM_SUCCESS) {
+                TPM_CERTIFY_INFO certifyInfo;
+                UINT32 outDataSize;
+                BYTE *outData;
+                tpm_unmarshal_TPM_CERTIFY_INFO(&ptr, &length, &certifyInfo);
+                tpm_unmarshal_UINT32(&ptr, &length, &outDataSize);
+                outData = ptr;
+                printf("TPM_CERTIFY_INFO certifyInfo\n");
+                printf_TPM_CERIFTY_INFO(&certifyInfo);
+                printf("UINT32 outDataSize: 0x%x\n", outDataSize);
+                printf_buf("BYTE outData:", outData, outDataSize);
+                ptr += outDataSize;
+                length -= outDataSize;
+
+            }
+            break;
+        }
+        case TPM_ORD_Extend: {
+            if (res == TPM_SUCCESS) {
+                TPM_PCRVALUE outDigest;
+                tpm_unmarshal_TPM_PCRVALUE(&ptr, &length, &outDigest);
+                printf_buf("TPM_PCRVALUE outDigest:", outDigest.digest, sizeof(TPM_PCRVALUE));
+            }
+            break;
+        }
+        case TPM_ORD_PCRRead: {
+            if (res == TPM_SUCCESS) {
+                TPM_PCRVALUE outDigest;
+                tpm_unmarshal_TPM_PCRVALUE(&ptr, &length, &outDigest);
+                printf_buf("TPM_PCRVALUE outDigest:", outDigest.digest, sizeof(TPM_PCRVALUE));
+            }
+            break;
+        }
+        case TPM_ORD_Quote: {
+            if (res == TPM_SUCCESS) {
+                TPM_PCR_COMPOSITE pcrData;
+                UINT32 sigSize;
+                BYTE *sig;
+                tpm_unmarshal_TPM_PCR_COMPOSITE(&ptr, &length, &pcrData);
+                tpm_unmarshal_UINT32(&ptr, &length, &sigSize);
+                //printf_buf("TPM_PCR_COMPOSITE pcrData", &pcrData, sizeof(pcrData));
+                printf_TPM_PCR_COMPOSITE(&pcrData);
+                printf("UINT32 sigSize: 0x%x\n", sigSize);
+                sig = ptr;
+                printf_buf("BYTE sig", sig, sigSize);
+                ptr += sigSize;
+                length -= sigSize;
+            }
+            break;
+        }
+
     }
     if (tag == TPM_TAG_RSP_AUTH2_COMMAND) {
         printf("TPM_AUTH auth1 list as follows:\n");
@@ -231,18 +351,18 @@ void printf_TPM_RESPONSE(BYTE const *buf, TPM_COMMAND_CODE ordinal) {
 }
 
 void printf_TPM_KEY_DATA(TPM_KEY_DATA *key) {
-    printf("TPM_PAYLOAD_TYPE payload          : %x\n", key->payload);
-    printf("TPM_KEY_USAGE keyUsage            : %x\n", key->keyUsage);
-    printf("TPM_KEY_FLAGS keyFlags            : %x\n", key->keyFlags);
-    printf("TPM_KEY_CONTROL keyControl        : %x\n", key->keyControl);
-    printf("TPM_AUTH_DATA_USAGE authDataUsage : %x\n", key->authDataUsage);
-    printf("TPM_ENC_SCHEME encScheme          : %x\n", key->encScheme);
-    printf("TPM_SIG_SCHEME sigScheme          : %x\n", key->sigScheme);
+    printf("TPM_PAYLOAD_TYPE payload          : 0x%x\n", key->payload);
+    printf("TPM_KEY_USAGE keyUsage            : 0x%x\n", key->keyUsage);
+    printf("TPM_KEY_FLAGS keyFlags            : 0x%x\n", key->keyFlags);
+    printf("TPM_KEY_CONTROL keyControl        : 0x%x\n", key->keyControl);
+    printf("TPM_AUTH_DATA_USAGE authDataUsage : 0x%x\n", key->authDataUsage);
+    printf("TPM_ENC_SCHEME encScheme          : 0x%x\n", key->encScheme);
+    printf("TPM_SIG_SCHEME sigScheme          : 0x%x\n", key->sigScheme);
     printf_buf("TPM_SECRET usageAuth", key->usageAuth, sizeof(TPM_SECRET));
     printf_buf("TPM_SECRET migrationAuth", key->migrationAuth, sizeof(TPM_SECRET));
     printf_buf("TPM_PCR_INFO pcrInfo", &key->pcrInfo, sizeof(TPM_PCR_INFO));
-    printf("UINT16 keyFileid: %x\n", key->keyFileid);
-    printf("UINT16 pubkeyFileid: %x\n", key->pubkeyFileid);
+    printf("UINT16 keyFileid: 0x%x\n", key->keyFileid);
+    printf("UINT16 pubkeyFileid: 0x%x\n", key->pubkeyFileid);
 }
 
 void printf_PERMANENT_DATA() {
@@ -421,17 +541,51 @@ void printf_TPM_SESSION_DATA(TPM_SESSION_DATA *session) {
 }
 
 void printf_TPM_KEY(TPM_KEY *wrappedKey) {
-    printf("TPM_STRUCTURE_TAG tag: %x\n", wrappedKey->tag);
-    printf("UINT16 fill :%x\n", wrappedKey->fill);
-    printf("TPM_KEY_USAGE keyUsage: %x\n", wrappedKey->keyUsage);
-    printf("TPM_KEY_FLAGS keyFlags: %x\n", wrappedKey->keyFlags);
+    printf("TPM_STRUCTURE_TAG tag: 0x%x\n", wrappedKey->tag);
+    printf("UINT16 fill : 0x%x\n", wrappedKey->fill);
+    printf("TPM_KEY_USAGE keyUsage: 0x%x\n", wrappedKey->keyUsage);
+    printf("TPM_KEY_FLAGS keyFlags: 0x%x\n", wrappedKey->keyFlags);
     printf("TPM_AUTH_DATA_USAGE authDataUsage :%x\n", wrappedKey->authDataUsage);
     //printf_buf("TPM_KEY_PARMS algorithmParms", &wrappedKey->algorithmParms, sizeof(TPM_KEY_PARMS));
-    printf("UINT32 PCRInfoSize %x\n", wrappedKey->PCRInfoSize);
+    printf("UINT32 PCRInfoSize 0x%x\n", wrappedKey->PCRInfoSize);
     //printf_buf("TPM_PCR_INFO PCRInfoSize ", &wrappedKey->PCRInfo, sizeof(wrappedKey->PCRInfo));
     printf("TPM_STORE_ASYMKEY pubkey.\n");
-    printf("pubkey size %x\n", wrappedKey->pubKey.keyLength);
+    printf("pubkey size 0x%x\n", wrappedKey->pubKey.keyLength);
     printf_buf("pubkey key", wrappedKey->pubKey.key, wrappedKey->pubKey.keyLength);
-    printf("UINT32 encDataSize: %x\n", wrappedKey->encDataSize);
+    printf("UINT32 encDataSize: 0x%x\n", wrappedKey->encDataSize);
     printf_buf("BYTE encData:", wrappedKey->encData, wrappedKey->encDataSize);
+}
+
+void printf_TPM_CERIFTY_INFO(TPM_CERTIFY_INFO *certInfo) {
+    printf("TPM_STRUCTURE_TAG tag: 0x%x\n", certInfo->tag);
+    printf("BYTE fill: 0x%x\n", certInfo->fill);
+    printf("TPM_PAYLOAD_TYPE payloadType: 0x%x\n", certInfo->payloadType);
+    printf("TPM_KEY_USAGE keyUsage: 0x%x\n", certInfo->keyUsage);
+    printf("TPM_KEY_FLAGS keyFlags: 0x%x\n", certInfo->keyFlags);
+    printf("TPM_AUTH_DATA_USAGE authDataUsage: 0x%x\n", certInfo->authDataUsage);
+    //printf("TPM_KEY_PARMS algorithmParms");
+    printf_buf("TPM_DIGEST pubkeyDigest: ", certInfo->pubkeyDigest.digest, sizeof(TPM_DIGEST));
+    printf_buf("TPM_NONCE data: ", certInfo->data.nonce, sizeof(TPM_NONCE));
+    printf("BOOL parentPCRStatus: 0x%x\n", certInfo->parentPCRStatus);
+    printf("UINT32 PCRInfoSize: 0x%x\n", certInfo->PCRInfoSize);
+    //printf("TPM_PCR_INFO PCRInfo")
+    printf("UINT32 migrationAuthoritySize: 0x%x\n", certInfo->migrationAuthoritySize);
+    //printf("migrationAuthortity");
+}
+
+void printf_TPM_PCR_SELECTION(TPM_PCR_SELECTION *pcrSelection) {
+    printf("UINT16 sizeOfSelect: 0x%x\n", pcrSelection->sizeOfSelect);
+    printf_buf("BYTE pcrSelect[TPM_NUM_PCR/8]", pcrSelection->pcrSelect, pcrSelection->sizeOfSelect);
+}
+
+void printf_TPM_PCR_COMPOSITE(TPM_PCR_COMPOSITE *pcrComposite) {
+    printf_TPM_PCR_SELECTION(&pcrComposite->select);
+    printf("UINT32 valueSize: 0x%x\n", pcrComposite->valueSize);
+    int i;
+    printf("PCRValue\n");
+    for (i = 0; i < pcrComposite->valueSize / sizeof(TPM_PCRVALUE); i++) {
+        char buffer[100];
+        sprintf(buffer, "PCR%d:", i);
+        printf_buf(buffer, &pcrComposite->pcrValue[i], sizeof(TPM_PCRVALUE));
+    }
 }

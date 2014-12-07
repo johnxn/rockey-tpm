@@ -145,6 +145,7 @@ KEY_LIC	Core/FTRX.h	/^} KEY_LIC;$/;"	t	typeref:struct:__anon5
 LED_BLINK	Core/FTRX.h	14;"	d
 LED_OFF	Core/FTRX.h	12;"	d
 LED_ON	Core/FTRX.h	13;"	d
+LOCALITY	tpm/tpm_integrity.c	33;"	d	file:
 MAX_BUF	main.c	16;"	d	file:
 MAX_MSA_COMPOSITE_ENTRIES	tpm/tpm_structures.h	431;"	d
 MODE_DECODE	Core/FTRX.h	17;"	d
@@ -347,6 +348,7 @@ TPM_CONTEXT_SENSITIVE	tpm/tpm_structures.h	/^} TPM_CONTEXT_SENSITIVE;$/;"	t	type
 TPM_COUNTER_VALUE	tpm/tpm_structures.h	/^} TPM_COUNTER_VALUE;$/;"	t	typeref:struct:tdTPM_COUNTER_VALUE
 TPM_COUNT_ID	tpm/tpm_structures.h	/^typedef UINT32 TPM_COUNT_ID;$/;"	t
 TPM_CURRENT_TICKS	tpm/tpm_structures.h	/^} TPM_CURRENT_TICKS;$/;"	t	typeref:struct:tdTPM_CURRENT_TICKS
+TPM_CertifyKey	tpm/tpm_crypto.c	/^TPM_RESULT TPM_CertifyKey(TPM_KEY_HANDLE certHandle, TPM_KEY_HANDLE keyHandle,$/;"	f
 TPM_CreateWrapKey	tpm/tpm_storage.c	/^TPM_RESULT TPM_CreateWrapKey(TPM_KEY_HANDLE parentHandle, $/;"	f
 TPM_DAAHANDLE	tpm/tpm_structures.h	/^typedef UINT32 TPM_DAAHANDLE;$/;"	t
 TPM_DAA_BLOB	tpm/tpm_structures.h	/^} TPM_DAA_BLOB;$/;"	t	typeref:struct:tdTPM_DAA_BLOB
@@ -464,6 +466,7 @@ TPM_ET_REVOKE	tpm/tpm_structures.h	145;"	d
 TPM_ET_SRK	tpm/tpm_structures.h	143;"	d
 TPM_ET_VERIFICATION_AUTH	tpm/tpm_structures.h	152;"	d
 TPM_ET_XOR	tpm/tpm_structures.h	155;"	d
+TPM_Extend	tpm/tpm_integrity.c	/^TPM_RESULT TPM_Extend(TPM_PCRINDEX pcrNum, TPM_DIGEST *inDigest, $/;"	f
 TPM_FAIL	tpm/tpm_structures.h	1306;"	d
 TPM_FAILEDSELFTEST	tpm/tpm_structures.h	1325;"	d
 TPM_FAMFLAG_ENABLED	tpm/tpm_structures.h	1610;"	d
@@ -595,6 +598,7 @@ TPM_MS_MIGRATE	tpm/tpm_structures.h	239;"	d
 TPM_MS_RESTRICT_APPROVE	tpm/tpm_structures.h	243;"	d
 TPM_MS_RESTRICT_MIGRATE	tpm/tpm_structures.h	242;"	d
 TPM_MS_REWRAP	tpm/tpm_structures.h	240;"	d
+TPM_MakeIdentity	tpm/tpm_identity.c	/^TPM_RESULT TPM_MakeIdentity($/;"	f
 TPM_NEEDS_SELFTEST	tpm/tpm_structures.h	1397;"	d
 TPM_NOCONTEXTSPACE	tpm/tpm_structures.h	1395;"	d
 TPM_NONCE	tpm/tpm_structures.h	/^} TPM_NONCE;$/;"	t	typeref:struct:tdTPM_NONCE
@@ -770,6 +774,7 @@ TPM_OWNER_SET	tpm/tpm_structures.h	1317;"	d
 TPM_PAYLOAD_TYPE	tpm/tpm_structures.h	/^typedef BYTE   TPM_PAYLOAD_TYPE;$/;"	t
 TPM_PC	tpm/tpm_structures.h	529;"	d
 TPM_PCRINDEX	tpm/tpm_structures.h	/^typedef UINT32 TPM_PCRINDEX;$/;"	t
+TPM_PCRRead	tpm/tpm_integrity.c	/^TPM_RESULT TPM_PCRRead(TPM_PCRINDEX pcrIndex, TPM_PCRVALUE *outDigest)$/;"	f
 TPM_PCRVALUE	tpm/tpm_structures.h	/^typedef TPM_DIGEST TPM_PCRVALUE;$/;"	t
 TPM_PCR_ATTRIBUTES	tpm/tpm_structures.h	/^} TPM_PCR_ATTRIBUTES;$/;"	t	typeref:struct:tdTPM_PCR_ATTRIBUTES
 TPM_PCR_COMPOSITE	tpm/tpm_structures.h	/^} TPM_PCR_COMPOSITE;$/;"	t	typeref:struct:tdTPM_PCR_COMPOSITE
@@ -819,6 +824,7 @@ TPM_PUBKEY	tpm/tpm_structures.h	/^} TPM_PUBKEY;$/;"	t	typeref:struct:tdTPM_PUBKE
 TPM_PUBKEY_DATA	tpm/tpm_structures.h	/^} TPM_PUBKEY_DATA;$/;"	t	typeref:struct:tdTPM_PUBKEY_DATA
 TPM_QUOTE_INFO	tpm/tpm_structures.h	/^} TPM_QUOTE_INFO;$/;"	t	typeref:struct:tdTPM_QUOTE_INFO
 TPM_QUOTE_INFO2	tpm/tpm_structures.h	/^} TPM_QUOTE_INFO2;$/;"	t	typeref:struct:tdTPM_QUOTE_INFO2
+TPM_Quote	tpm/tpm_integrity.c	/^TPM_RESULT TPM_Quote(TPM_KEY_HANDLE keyHandle, TPM_NONCE *extrnalData, $/;"	f
 TPM_READ_ONLY	tpm/tpm_structures.h	1359;"	d
 TPM_REDIR_COMMAND	tpm/tpm_structures.h	/^typedef UINT32 TPM_REDIR_COMMAND;$/;"	t
 TPM_REDIT_COMMAND	tpm/tpm_structures.h	/^typedef UINT32 TPM_REDIT_COMMAND;$/;"	t
@@ -995,375 +1001,392 @@ WRITE	tpm/tpm_data.h	17;"	d
 XCoordinate	Core/FTRX.h	/^	unsigned int XCoordinate[8];$/;"	m	struct:__anon10
 YCoordinate	Core/FTRX.h	/^	unsigned int YCoordinate[8];$/;"	m	struct:__anon10
 [0]	demo.htm	/^<P><STRONG><a name="[0]"><\/a>Reset_Handler<\/STRONG> (Thumb, 4 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[100]	demo.htm	/^<P><STRONG><a name="[100]"><\/a>tpm_unmarshal_TPM_DAA_SESSION_DATA<\/STRONG> (Thumb, 104 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[101]	demo.htm	/^<P><STRONG><a name="[101]"><\/a>tpm_marshal_TPM_MSA_COMPOSITE<\/STRONG> (Thumb, 62 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[102]	demo.htm	/^<P><STRONG><a name="[102]"><\/a>tpm_unmarshal_TPM_MSA_COMPOSITE<\/STRONG> (Thumb, 66 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[103]	demo.htm	/^<P><STRONG><a name="[103]"><\/a>tpm_marshal_TPM_CMK_AUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[104]	demo.htm	/^<P><STRONG><a name="[104]"><\/a>tpm_unmarshal_TPM_CMK_AUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[105]	demo.htm	/^<P><STRONG><a name="[105]"><\/a>tpm_marshal_TPM_SELECT_SIZE<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[106]	demo.htm	/^<P><STRONG><a name="[106]"><\/a>tpm_unmarshal_TPM_SELECT_SIZE<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[107]	demo.htm	/^<P><STRONG><a name="[107]"><\/a>tpm_marshal_TPM_CAP_VERSION_INFO<\/STRONG> (Thumb, 152 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[108]	demo.htm	/^<P><STRONG><a name="[108]"><\/a>tpm_unmarshal_TPM_CAP_VERSION_INFO<\/STRONG> (Thumb, 164 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[109]	demo.htm	/^<P><STRONG><a name="[109]"><\/a>tpm_marshal_TPM_ASYM_CA_CONTENTS<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[100]	demo.htm	/^<P><STRONG><a name="[100]"><\/a>tpm_marshal_TPM_DAA_BLOB<\/STRONG> (Thumb, 132 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[101]	demo.htm	/^<P><STRONG><a name="[101]"><\/a>tpm_unmarshal_TPM_DAA_BLOB<\/STRONG> (Thumb, 138 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[102]	demo.htm	/^<P><STRONG><a name="[102]"><\/a>tpm_marshal_TPM_DAA_SENSITIVE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[103]	demo.htm	/^<P><STRONG><a name="[103]"><\/a>tpm_unmarshal_TPM_DAA_SENSITIVE<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[104]	demo.htm	/^<P><STRONG><a name="[104]"><\/a>tpm_marshal_TPM_DAA_ISSUER<\/STRONG> (Thumb, 136 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[105]	demo.htm	/^<P><STRONG><a name="[105]"><\/a>tpm_unmarshal_TPM_DAA_ISSUER<\/STRONG> (Thumb, 134 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[106]	demo.htm	/^<P><STRONG><a name="[106]"><\/a>tpm_marshal_TPM_DAA_TPM<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[107]	demo.htm	/^<P><STRONG><a name="[107]"><\/a>tpm_unmarshal_TPM_DAA_TPM<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[108]	demo.htm	/^<P><STRONG><a name="[108]"><\/a>tpm_marshal_TPM_DAA_CONTEXT<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[109]	demo.htm	/^<P><STRONG><a name="[109]"><\/a>tpm_unmarshal_TPM_DAA_CONTEXT<\/STRONG> (Thumb, 106 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
 [10]	demo.htm	/^<P><STRONG><a name="[10]"><\/a>__aeabi_uread4<\/STRONG> (Thumb, 20 bytes, Stack size 0 bytes, uread4.o(.text))$/;"	a
-[10a]	demo.htm	/^<P><STRONG><a name="[10a]"><\/a>tpm_unmarshal_TPM_ASYM_CA_CONTENTS<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[10b]	demo.htm	/^<P><STRONG><a name="[10b]"><\/a>tpm_marshal_TPM_QUOTE_INFO2<\/STRONG> (Thumb, 110 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[10c]	demo.htm	/^<P><STRONG><a name="[10c]"><\/a>tpm_unmarshal_TPM_QUOTE_INFO2<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[10d]	demo.htm	/^<P><STRONG><a name="[10d]"><\/a>tpm_marshal_TPM_EK_BLOB<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[10e]	demo.htm	/^<P><STRONG><a name="[10e]"><\/a>tpm_unmarshal_TPM_EK_BLOB<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[10f]	demo.htm	/^<P><STRONG><a name="[10f]"><\/a>tpm_marshal_TPM_EK_BLOB_ACTIVATE<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[110]	demo.htm	/^<P><STRONG><a name="[110]"><\/a>tpm_unmarshal_TPM_EK_BLOB_ACTIVATE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[111]	demo.htm	/^<P><STRONG><a name="[111]"><\/a>tpm_marshal_TPM_NV_ATTRIBUTES<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[112]	demo.htm	/^<P><STRONG><a name="[112]"><\/a>tpm_unmarshal_TPM_NV_ATTRIBUTES<\/STRONG> (Thumb, 36 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[113]	demo.htm	/^<P><STRONG><a name="[113]"><\/a>tpm_marshal_TPM_NV_DATA_PUBLIC<\/STRONG> (Thumb, 144 bytes, Stack size 24 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[114]	demo.htm	/^<P><STRONG><a name="[114]"><\/a>tpm_unmarshal_TPM_NV_DATA_PUBLIC<\/STRONG> (Thumb, 148 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[115]	demo.htm	/^<P><STRONG><a name="[115]"><\/a>tpm_marshal_TPM_NV_DATA_SENSITIVE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[116]	demo.htm	/^<P><STRONG><a name="[116]"><\/a>tpm_unmarshal_TPM_NV_DATA_SENSITIVE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[117]	demo.htm	/^<P><STRONG><a name="[117]"><\/a>tpm_marshal_TPM_DELEGATIONS<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[118]	demo.htm	/^<P><STRONG><a name="[118]"><\/a>tpm_unmarshal_TPM_DELEGATIONS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[119]	demo.htm	/^<P><STRONG><a name="[119]"><\/a>tpm_marshal_TPM_FAMILY_LABEL<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11]	demo.htm	/^<P><STRONG><a name="[11]"><\/a>tpm_get_in_param_offset<\/STRONG> (Thumb, 146 bytes, Stack size 4 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[11a]	demo.htm	/^<P><STRONG><a name="[11a]"><\/a>tpm_unmarshal_TPM_FAMILY_LABEL<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11b]	demo.htm	/^<P><STRONG><a name="[11b]"><\/a>tpm_marshal_TPM_FAMILY_TABLE_ENTRY<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11c]	demo.htm	/^<P><STRONG><a name="[11c]"><\/a>tpm_unmarshal_TPM_FAMILY_TABLE_ENTRY<\/STRONG> (Thumb, 82 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11d]	demo.htm	/^<P><STRONG><a name="[11d]"><\/a>tpm_marshal_TPM_DELEGATE_LABEL<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11e]	demo.htm	/^<P><STRONG><a name="[11e]"><\/a>tpm_unmarshal_TPM_DELEGATE_LABEL<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[11f]	demo.htm	/^<P><STRONG><a name="[11f]"><\/a>tpm_marshal_TPM_DELEGATE_PUBLIC<\/STRONG> (Thumb, 96 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[120]	demo.htm	/^<P><STRONG><a name="[120]"><\/a>tpm_unmarshal_TPM_DELEGATE_PUBLIC<\/STRONG> (Thumb, 98 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[121]	demo.htm	/^<P><STRONG><a name="[121]"><\/a>tpm_marshal_TPM_DELEGATE_PUBLIC_ARRAY<\/STRONG> (Thumb, 50 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[122]	demo.htm	/^<P><STRONG><a name="[122]"><\/a>tpm_unmarshal_TPM_DELEGATE_PUBLIC_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[123]	demo.htm	/^<P><STRONG><a name="[123]"><\/a>tpm_marshal_TPM_DELEGATE_TABLE_ROW<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[124]	demo.htm	/^<P><STRONG><a name="[124]"><\/a>tpm_unmarshal_TPM_DELEGATE_TABLE_ROW<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[125]	demo.htm	/^<P><STRONG><a name="[125]"><\/a>tpm_marshal_TPM_DELEGATE_SENSITIVE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[126]	demo.htm	/^<P><STRONG><a name="[126]"><\/a>tpm_unmarshal_TPM_DELEGATE_SENSITIVE<\/STRONG> (Thumb, 36 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[127]	demo.htm	/^<P><STRONG><a name="[127]"><\/a>tpm_marshal_TPM_DELEGATE_OWNER_BLOB<\/STRONG> (Thumb, 114 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[128]	demo.htm	/^<P><STRONG><a name="[128]"><\/a>tpm_unmarshal_TPM_DELEGATE_OWNER_BLOB<\/STRONG> (Thumb, 120 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[129]	demo.htm	/^<P><STRONG><a name="[129]"><\/a>tpm_marshal_TPM_DELEGATE_KEY_BLOB<\/STRONG> (Thumb, 130 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12]	demo.htm	/^<P><STRONG><a name="[12]"><\/a>__ARM_common_switch8<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_cmd_handler.o(i.__ARM_common_switch8))$/;"	a
-[12a]	demo.htm	/^<P><STRONG><a name="[12a]"><\/a>tpm_unmarshal_TPM_DELEGATE_KEY_BLOB<\/STRONG> (Thumb, 136 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12b]	demo.htm	/^<P><STRONG><a name="[12b]"><\/a>tpm_marshal_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 308 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12c]	demo.htm	/^<P><STRONG><a name="[12c]"><\/a>tpm_unmarshal_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 334 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12d]	demo.htm	/^<P><STRONG><a name="[12d]"><\/a>tpm_marshal_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 94 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12e]	demo.htm	/^<P><STRONG><a name="[12e]"><\/a>tpm_unmarshal_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 92 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[12f]	demo.htm	/^<P><STRONG><a name="[12f]"><\/a>tpm_marshal_TPM_STANY_FLAGS<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[130]	demo.htm	/^<P><STRONG><a name="[130]"><\/a>tpm_unmarshal_TPM_STANY_FLAGS<\/STRONG> (Thumb, 82 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[131]	demo.htm	/^<P><STRONG><a name="[131]"><\/a>tpm_marshal_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 96 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[132]	demo.htm	/^<P><STRONG><a name="[132]"><\/a>tpm_unmarshal_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[133]	demo.htm	/^<P><STRONG><a name="[133]"><\/a>tpm_marshal_TPM_SESSION_DATA<\/STRONG> (Thumb, 162 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[134]	demo.htm	/^<P><STRONG><a name="[134]"><\/a>tpm_unmarshal_TPM_SESSION_DATA<\/STRONG> (Thumb, 164 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[135]	demo.htm	/^<P><STRONG><a name="[135]"><\/a>tpm_marshal_TPM_STANY_DATA<\/STRONG> (Thumb, 214 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[136]	demo.htm	/^<P><STRONG><a name="[136]"><\/a>tpm_unmarshal_TPM_STANY_DATA<\/STRONG> (Thumb, 214 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[137]	demo.htm	/^<P><STRONG><a name="[137]"><\/a>tpm_get_free_session<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_context.o(.text))$/;"	a
-[138]	demo.htm	/^<P><STRONG><a name="[138]"><\/a>tpm_verify_auth<\/STRONG> (Thumb, 222 bytes, Stack size 384 bytes, tpm_authorization.o(.text))$/;"	a
-[139]	demo.htm	/^<P><STRONG><a name="[139]"><\/a>memcmp<\/STRONG> (Thumb, 58 bytes, Stack size 16 bytes, memcmp.o(.text))$/;"	a
-[13]	demo.htm	/^<P><STRONG><a name="[13]"><\/a>set_permanent_flags<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[13a]	demo.htm	/^<P><STRONG><a name="[13a]"><\/a>tpm_decrypt_auth_secret<\/STRONG> (Thumb, 66 bytes, Stack size 112 bytes, tpm_authorization.o(.text))$/;"	a
-[13b]	demo.htm	/^<P><STRONG><a name="[13b]"><\/a>tpm_invalidate_sessions<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_context.o(.text))$/;"	a
-[13c]	demo.htm	/^<P><STRONG><a name="[13c]"><\/a>rsa_pri<\/STRONG> (Thumb, 34 bytes, Stack size 24 bytes, api.o(.text))$/;"	a
-[13d]	demo.htm	/^<P><STRONG><a name="[13d]"><\/a>__aeabi_memcpy4<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memcpya.o(.text))$/;"	a
-[13e]	demo.htm	/^<P><STRONG><a name="[13e]"><\/a>realloc<\/STRONG> (Thumb, 114 bytes, Stack size 40 bytes, mallocr.o(i.realloc))$/;"	a
-[13f]	demo.htm	/^<P><STRONG><a name="[13f]"><\/a>tpm_get_free_key<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_storage.o(.text))$/;"	a
-[140]	demo.htm	/^<P><STRONG><a name="[140]"><\/a>tpm_rsa_import_key<\/STRONG> (Thumb, 108 bytes, Stack size 24 bytes, tpm_storage.o(.text))$/;"	a
-[141]	demo.htm	/^<P><STRONG><a name="[141]"><\/a>tpm_encrypt_private_key<\/STRONG> (Thumb, 88 bytes, Stack size 56 bytes, tpm_storage.o(.text), UNUSED)$/;"	a
-[142]	demo.htm	/^<P><STRONG><a name="[142]"><\/a>tpm_decrypt_private_key<\/STRONG> (Thumb, 80 bytes, Stack size 48 bytes, tpm_storage.o(.text))$/;"	a
-[143]	demo.htm	/^<P><STRONG><a name="[143]"><\/a>tpm_rsa_decrypt<\/STRONG> (Thumb, 50 bytes, Stack size 24 bytes, tpm_storage.o(.text))$/;"	a
-[144]	demo.htm	/^<P><STRONG><a name="[144]"><\/a>tpm_compute_key_digest<\/STRONG> (Thumb, 114 bytes, Stack size 120 bytes, tpm_storage.o(.text))$/;"	a
-[145]	demo.htm	/^<P><STRONG><a name="[145]"><\/a>tpm_extract_pubkey<\/STRONG> (Thumb, 66 bytes, Stack size 24 bytes, tpm_storage.o(.text))$/;"	a
-[146]	demo.htm	/^<P><STRONG><a name="[146]"><\/a>__aeabi_memmove<\/STRONG> (Thumb, 58 bytes, Stack size 16 bytes, memmovea.o(.text))$/;"	a
-[147]	demo.htm	/^<P><STRONG><a name="[147]"><\/a>tpm_sha1_transform<\/STRONG> (Thumb, 4024 bytes, Stack size 120 bytes, sha1.o(.text))$/;"	a
-[148]	demo.htm	/^<P><STRONG><a name="[148]"><\/a>image_relocation<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, image_relocation.o(.text))$/;"	a
-[149]	demo.htm	/^<P><STRONG><a name="[149]"><\/a>__aeabi_memcpy8<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)$/;"	a
-[14]	demo.htm	/^<P><STRONG><a name="[14]"><\/a>TPM_Init<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_startup.o(.text))$/;"	a
-[14a]	demo.htm	/^<P><STRONG><a name="[14a]"><\/a>__aeabi_memmove4<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memmovea.o(.text), UNUSED)$/;"	a
-[14b]	demo.htm	/^<P><STRONG><a name="[14b]"><\/a>__aeabi_memmove8<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memmovea.o(.text), UNUSED)$/;"	a
-[14c]	demo.htm	/^<P><STRONG><a name="[14c]"><\/a>_memset$wrapper<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)$/;"	a
-[14d]	demo.htm	/^<P><STRONG><a name="[14d]"><\/a>__main_after_scatterload<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))$/;"	a
-[14e]	demo.htm	/^<P><STRONG><a name="[14e]"><\/a>internal_alloc<\/STRONG> (Thumb, 66 bytes, Stack size 24 bytes, mallocr.o(i.internal_alloc))$/;"	a
-[14f]	demo.htm	/^<P><STRONG><a name="[14f]"><\/a>_main_stk<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))$/;"	a
-[150]	demo.htm	/^<P><STRONG><a name="[150]"><\/a>_main_init<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7.o(.ARM.Collect$$$$00000007))$/;"	a
-[151]	demo.htm	/^<P><STRONG><a name="[151]"><\/a>tpm_get_key_slot<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
-[152]	demo.htm	/^<P><STRONG><a name="[152]"><\/a>tpm_get_session_slot<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
-[153]	demo.htm	/^<P><STRONG><a name="[153]"><\/a>tpm_get_daa_slot<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
-[154]	demo.htm	/^<P><STRONG><a name="[154]"><\/a>get_keyinfo<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[155]	demo.htm	/^<P><STRONG><a name="[155]"><\/a>led_control<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[156]	demo.htm	/^<P><STRONG><a name="[156]"><\/a>get_tickcount<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[157]	demo.htm	/^<P><STRONG><a name="[157]"><\/a>get_realtime<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[158]	demo.htm	/^<P><STRONG><a name="[158]"><\/a>get_expiretime<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[159]	demo.htm	/^<P><STRONG><a name="[159]"><\/a>get_sharememory<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[15]	demo.htm	/^<P><STRONG><a name="[15]"><\/a>save_flags<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[15a]	demo.htm	/^<P><STRONG><a name="[15a]"><\/a>set_sharememory<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[15b]	demo.htm	/^<P><STRONG><a name="[15b]"><\/a>rsa_pub<\/STRONG> (Thumb, 34 bytes, Stack size 24 bytes, api.o(.text), UNUSED)$/;"	a
-[15c]	demo.htm	/^<P><STRONG><a name="[15c]"><\/a>ecc_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[15d]	demo.htm	/^<P><STRONG><a name="[15d]"><\/a>ecc_sign<\/STRONG> (Thumb, 30 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[15e]	demo.htm	/^<P><STRONG><a name="[15e]"><\/a>ecc_verify<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[15f]	demo.htm	/^<P><STRONG><a name="[15f]"><\/a>sm2_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[160]	demo.htm	/^<P><STRONG><a name="[160]"><\/a>sm2_sign<\/STRONG> (Thumb, 30 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[161]	demo.htm	/^<P><STRONG><a name="[161]"><\/a>sm2_verify<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[162]	demo.htm	/^<P><STRONG><a name="[162]"><\/a>tdes<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[163]	demo.htm	/^<P><STRONG><a name="[163]"><\/a>sm4<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[164]	demo.htm	/^<P><STRONG><a name="[164]"><\/a>sha1<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[165]	demo.htm	/^<P><STRONG><a name="[165]"><\/a>sm3<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[166]	demo.htm	/^<P><STRONG><a name="[166]"><\/a>seed<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[167]	demo.htm	/^<P><STRONG><a name="[167]"><\/a>get_pinstate<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[168]	demo.htm	/^<P><STRONG><a name="[168]"><\/a>__aeabi_uidiv<\/STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)$/;"	a
-[169]	demo.htm	/^<P><STRONG><a name="[169]"><\/a>__aeabi_memset4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
-[16]	demo.htm	/^<P><STRONG><a name="[16]"><\/a>restore_flags<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[16a]	demo.htm	/^<P><STRONG><a name="[16a]"><\/a>__aeabi_memset8<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
-[16b]	demo.htm	/^<P><STRONG><a name="[16b]"><\/a>__aeabi_memclr8<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
-[16c]	demo.htm	/^<P><STRONG><a name="[16c]"><\/a>__rt_uread4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, uread4.o(.text), UNUSED)$/;"	a
-[16d]	demo.htm	/^<P><STRONG><a name="[16d]"><\/a>_uread4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, uread4.o(.text), UNUSED)$/;"	a
-[16e]	demo.htm	/^<P><STRONG><a name="[16e]"><\/a>__scatterload_rt2<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)$/;"	a
-[16f]	demo.htm	/^<P><STRONG><a name="[16f]"><\/a>__scatterload_copy<\/STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)$/;"	a
-[170]	demo.htm	/^<P><STRONG><a name="[170]"><\/a>__scatterload_null<\/STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)$/;"	a
-[171]	demo.htm	/^<P><STRONG><a name="[171]"><\/a>__scatterload_zeroinit<\/STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)$/;"	a
-[17]	demo.htm	/^<P><STRONG><a name="[17]"><\/a>tpm_emulator_shutdown<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text), UNUSED)$/;"	a
-[18]	demo.htm	/^<P><STRONG><a name="[18]"><\/a>TPM_SaveState<\/STRONG> (Thumb, 28 bytes, Stack size 0 bytes, tpm_startup.o(.text))$/;"	a
-[19]	demo.htm	/^<P><STRONG><a name="[19]"><\/a>tpm_compute_in_param_digest<\/STRONG> (Thumb, 76 bytes, Stack size 104 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[10a]	demo.htm	/^<P><STRONG><a name="[10a]"><\/a>tpm_marshal_TPM_DAA_JOINDATA<\/STRONG> (Thumb, 60 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[10b]	demo.htm	/^<P><STRONG><a name="[10b]"><\/a>tpm_unmarshal_TPM_DAA_JOINDATA<\/STRONG> (Thumb, 60 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[10c]	demo.htm	/^<P><STRONG><a name="[10c]"><\/a>tpm_marshal_TPM_DAA_SESSION_DATA<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[10d]	demo.htm	/^<P><STRONG><a name="[10d]"><\/a>tpm_unmarshal_TPM_DAA_SESSION_DATA<\/STRONG> (Thumb, 104 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[10e]	demo.htm	/^<P><STRONG><a name="[10e]"><\/a>tpm_marshal_TPM_MSA_COMPOSITE<\/STRONG> (Thumb, 62 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[10f]	demo.htm	/^<P><STRONG><a name="[10f]"><\/a>tpm_unmarshal_TPM_MSA_COMPOSITE<\/STRONG> (Thumb, 66 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[110]	demo.htm	/^<P><STRONG><a name="[110]"><\/a>tpm_marshal_TPM_CMK_AUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[111]	demo.htm	/^<P><STRONG><a name="[111]"><\/a>tpm_unmarshal_TPM_CMK_AUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[112]	demo.htm	/^<P><STRONG><a name="[112]"><\/a>tpm_marshal_TPM_SELECT_SIZE<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[113]	demo.htm	/^<P><STRONG><a name="[113]"><\/a>tpm_unmarshal_TPM_SELECT_SIZE<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[114]	demo.htm	/^<P><STRONG><a name="[114]"><\/a>tpm_marshal_TPM_CAP_VERSION_INFO<\/STRONG> (Thumb, 152 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[115]	demo.htm	/^<P><STRONG><a name="[115]"><\/a>tpm_unmarshal_TPM_CAP_VERSION_INFO<\/STRONG> (Thumb, 164 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[116]	demo.htm	/^<P><STRONG><a name="[116]"><\/a>tpm_marshal_TPM_ASYM_CA_CONTENTS<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[117]	demo.htm	/^<P><STRONG><a name="[117]"><\/a>tpm_unmarshal_TPM_ASYM_CA_CONTENTS<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[118]	demo.htm	/^<P><STRONG><a name="[118]"><\/a>tpm_marshal_TPM_QUOTE_INFO2<\/STRONG> (Thumb, 110 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[119]	demo.htm	/^<P><STRONG><a name="[119]"><\/a>tpm_unmarshal_TPM_QUOTE_INFO2<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11]	demo.htm	/^<P><STRONG><a name="[11]"><\/a>tpm_marshal_BLOB<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[11a]	demo.htm	/^<P><STRONG><a name="[11a]"><\/a>tpm_marshal_TPM_EK_BLOB<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11b]	demo.htm	/^<P><STRONG><a name="[11b]"><\/a>tpm_unmarshal_TPM_EK_BLOB<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11c]	demo.htm	/^<P><STRONG><a name="[11c]"><\/a>tpm_marshal_TPM_EK_BLOB_ACTIVATE<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11d]	demo.htm	/^<P><STRONG><a name="[11d]"><\/a>tpm_unmarshal_TPM_EK_BLOB_ACTIVATE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11e]	demo.htm	/^<P><STRONG><a name="[11e]"><\/a>tpm_marshal_TPM_NV_ATTRIBUTES<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[11f]	demo.htm	/^<P><STRONG><a name="[11f]"><\/a>tpm_unmarshal_TPM_NV_ATTRIBUTES<\/STRONG> (Thumb, 36 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[120]	demo.htm	/^<P><STRONG><a name="[120]"><\/a>tpm_marshal_TPM_NV_DATA_PUBLIC<\/STRONG> (Thumb, 144 bytes, Stack size 24 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[121]	demo.htm	/^<P><STRONG><a name="[121]"><\/a>tpm_unmarshal_TPM_NV_DATA_PUBLIC<\/STRONG> (Thumb, 148 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[122]	demo.htm	/^<P><STRONG><a name="[122]"><\/a>tpm_marshal_TPM_NV_DATA_SENSITIVE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[123]	demo.htm	/^<P><STRONG><a name="[123]"><\/a>tpm_unmarshal_TPM_NV_DATA_SENSITIVE<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[124]	demo.htm	/^<P><STRONG><a name="[124]"><\/a>tpm_marshal_TPM_DELEGATIONS<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[125]	demo.htm	/^<P><STRONG><a name="[125]"><\/a>tpm_unmarshal_TPM_DELEGATIONS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[126]	demo.htm	/^<P><STRONG><a name="[126]"><\/a>tpm_marshal_TPM_FAMILY_LABEL<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[127]	demo.htm	/^<P><STRONG><a name="[127]"><\/a>tpm_unmarshal_TPM_FAMILY_LABEL<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[128]	demo.htm	/^<P><STRONG><a name="[128]"><\/a>tpm_marshal_TPM_FAMILY_TABLE_ENTRY<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[129]	demo.htm	/^<P><STRONG><a name="[129]"><\/a>tpm_unmarshal_TPM_FAMILY_TABLE_ENTRY<\/STRONG> (Thumb, 82 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12]	demo.htm	/^<P><STRONG><a name="[12]"><\/a>tpm_get_in_param_offset<\/STRONG> (Thumb, 146 bytes, Stack size 4 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[12a]	demo.htm	/^<P><STRONG><a name="[12a]"><\/a>tpm_marshal_TPM_DELEGATE_LABEL<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12b]	demo.htm	/^<P><STRONG><a name="[12b]"><\/a>tpm_unmarshal_TPM_DELEGATE_LABEL<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12c]	demo.htm	/^<P><STRONG><a name="[12c]"><\/a>tpm_marshal_TPM_DELEGATE_PUBLIC<\/STRONG> (Thumb, 96 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12d]	demo.htm	/^<P><STRONG><a name="[12d]"><\/a>tpm_unmarshal_TPM_DELEGATE_PUBLIC<\/STRONG> (Thumb, 98 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12e]	demo.htm	/^<P><STRONG><a name="[12e]"><\/a>tpm_marshal_TPM_DELEGATE_PUBLIC_ARRAY<\/STRONG> (Thumb, 50 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[12f]	demo.htm	/^<P><STRONG><a name="[12f]"><\/a>tpm_unmarshal_TPM_DELEGATE_PUBLIC_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[130]	demo.htm	/^<P><STRONG><a name="[130]"><\/a>tpm_marshal_TPM_DELEGATE_TABLE_ROW<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[131]	demo.htm	/^<P><STRONG><a name="[131]"><\/a>tpm_unmarshal_TPM_DELEGATE_TABLE_ROW<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[132]	demo.htm	/^<P><STRONG><a name="[132]"><\/a>tpm_marshal_TPM_DELEGATE_SENSITIVE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[133]	demo.htm	/^<P><STRONG><a name="[133]"><\/a>tpm_unmarshal_TPM_DELEGATE_SENSITIVE<\/STRONG> (Thumb, 36 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[134]	demo.htm	/^<P><STRONG><a name="[134]"><\/a>tpm_marshal_TPM_DELEGATE_OWNER_BLOB<\/STRONG> (Thumb, 114 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[135]	demo.htm	/^<P><STRONG><a name="[135]"><\/a>tpm_unmarshal_TPM_DELEGATE_OWNER_BLOB<\/STRONG> (Thumb, 120 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[136]	demo.htm	/^<P><STRONG><a name="[136]"><\/a>tpm_marshal_TPM_DELEGATE_KEY_BLOB<\/STRONG> (Thumb, 130 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[137]	demo.htm	/^<P><STRONG><a name="[137]"><\/a>tpm_unmarshal_TPM_DELEGATE_KEY_BLOB<\/STRONG> (Thumb, 136 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[138]	demo.htm	/^<P><STRONG><a name="[138]"><\/a>tpm_marshal_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 308 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[139]	demo.htm	/^<P><STRONG><a name="[139]"><\/a>tpm_unmarshal_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 334 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13]	demo.htm	/^<P><STRONG><a name="[13]"><\/a>__ARM_common_switch8<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_cmd_handler.o(i.__ARM_common_switch8))$/;"	a
+[13a]	demo.htm	/^<P><STRONG><a name="[13a]"><\/a>tpm_marshal_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 94 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13b]	demo.htm	/^<P><STRONG><a name="[13b]"><\/a>tpm_unmarshal_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 92 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13c]	demo.htm	/^<P><STRONG><a name="[13c]"><\/a>tpm_marshal_TPM_STANY_FLAGS<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13d]	demo.htm	/^<P><STRONG><a name="[13d]"><\/a>tpm_unmarshal_TPM_STANY_FLAGS<\/STRONG> (Thumb, 82 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13e]	demo.htm	/^<P><STRONG><a name="[13e]"><\/a>tpm_marshal_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 96 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[13f]	demo.htm	/^<P><STRONG><a name="[13f]"><\/a>tpm_unmarshal_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[140]	demo.htm	/^<P><STRONG><a name="[140]"><\/a>tpm_marshal_TPM_SESSION_DATA<\/STRONG> (Thumb, 162 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[141]	demo.htm	/^<P><STRONG><a name="[141]"><\/a>tpm_unmarshal_TPM_SESSION_DATA<\/STRONG> (Thumb, 164 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[142]	demo.htm	/^<P><STRONG><a name="[142]"><\/a>tpm_marshal_TPM_STANY_DATA<\/STRONG> (Thumb, 214 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[143]	demo.htm	/^<P><STRONG><a name="[143]"><\/a>tpm_unmarshal_TPM_STANY_DATA<\/STRONG> (Thumb, 214 bytes, Stack size 32 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[144]	demo.htm	/^<P><STRONG><a name="[144]"><\/a>tpm_get_free_session<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_context.o(.text))$/;"	a
+[145]	demo.htm	/^<P><STRONG><a name="[145]"><\/a>tpm_verify_auth<\/STRONG> (Thumb, 222 bytes, Stack size 384 bytes, tpm_authorization.o(.text))$/;"	a
+[146]	demo.htm	/^<P><STRONG><a name="[146]"><\/a>memcmp<\/STRONG> (Thumb, 58 bytes, Stack size 16 bytes, memcmp.o(.text))$/;"	a
+[147]	demo.htm	/^<P><STRONG><a name="[147]"><\/a>tpm_decrypt_auth_secret<\/STRONG> (Thumb, 66 bytes, Stack size 112 bytes, tpm_authorization.o(.text))$/;"	a
+[148]	demo.htm	/^<P><STRONG><a name="[148]"><\/a>tpm_invalidate_sessions<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_context.o(.text))$/;"	a
+[149]	demo.htm	/^<P><STRONG><a name="[149]"><\/a>rsa_pri<\/STRONG> (Thumb, 34 bytes, Stack size 24 bytes, api.o(.text))$/;"	a
+[14]	demo.htm	/^<P><STRONG><a name="[14]"><\/a>tpm_init_data<\/STRONG> (Thumb, 410 bytes, Stack size 792 bytes, tpm_data.o(.text))$/;"	a
+[14a]	demo.htm	/^<P><STRONG><a name="[14a]"><\/a>__aeabi_memcpy4<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memcpya.o(.text))$/;"	a
+[14b]	demo.htm	/^<P><STRONG><a name="[14b]"><\/a>realloc<\/STRONG> (Thumb, 114 bytes, Stack size 40 bytes, mallocr.o(i.realloc))$/;"	a
+[14c]	demo.htm	/^<P><STRONG><a name="[14c]"><\/a>tpm_get_free_key<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_storage.o(.text))$/;"	a
+[14d]	demo.htm	/^<P><STRONG><a name="[14d]"><\/a>tpm_rsa_import_key<\/STRONG> (Thumb, 112 bytes, Stack size 40 bytes, tpm_storage.o(.text))$/;"	a
+[14e]	demo.htm	/^<P><STRONG><a name="[14e]"><\/a>tpm_encrypt_private_key<\/STRONG> (Thumb, 148 bytes, Stack size 64 bytes, tpm_storage.o(.text))$/;"	a
+[14f]	demo.htm	/^<P><STRONG><a name="[14f]"><\/a>rsa_pub<\/STRONG> (Thumb, 34 bytes, Stack size 24 bytes, api.o(.text))$/;"	a
+[150]	demo.htm	/^<P><STRONG><a name="[150]"><\/a>tpm_encrypt_private_key_new<\/STRONG> (Thumb, 144 bytes, Stack size 64 bytes, tpm_storage.o(.text))$/;"	a
+[151]	demo.htm	/^<P><STRONG><a name="[151]"><\/a>tpm_decrypt_private_key<\/STRONG> (Thumb, 110 bytes, Stack size 56 bytes, tpm_storage.o(.text))$/;"	a
+[152]	demo.htm	/^<P><STRONG><a name="[152]"><\/a>tpm_decrypt_private_key_new<\/STRONG> (Thumb, 104 bytes, Stack size 56 bytes, tpm_storage.o(.text), UNUSED)$/;"	a
+[153]	demo.htm	/^<P><STRONG><a name="[153]"><\/a>tpm_rsa_decrypt<\/STRONG> (Thumb, 58 bytes, Stack size 32 bytes, tpm_storage.o(.text))$/;"	a
+[154]	demo.htm	/^<P><STRONG><a name="[154]"><\/a>tpm_compute_key_digest<\/STRONG> (Thumb, 102 bytes, Stack size 120 bytes, tpm_storage.o(.text))$/;"	a
+[155]	demo.htm	/^<P><STRONG><a name="[155]"><\/a>tpm_extract_pubkey<\/STRONG> (Thumb, 66 bytes, Stack size 24 bytes, tpm_storage.o(.text))$/;"	a
+[156]	demo.htm	/^<P><STRONG><a name="[156]"><\/a>__aeabi_memmove<\/STRONG> (Thumb, 58 bytes, Stack size 16 bytes, memmovea.o(.text))$/;"	a
+[157]	demo.htm	/^<P><STRONG><a name="[157]"><\/a>tpm_compute_pcr_digest<\/STRONG> (Thumb, 224 bytes, Stack size 648 bytes, tpm_integrity.o(.text))$/;"	a
+[158]	demo.htm	/^<P><STRONG><a name="[158]"><\/a>tpm_setup_key_parms<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_crypto.o(.text))$/;"	a
+[159]	demo.htm	/^<P><STRONG><a name="[159]"><\/a>tpm_sha1_transform<\/STRONG> (Thumb, 4024 bytes, Stack size 120 bytes, sha1.o(.text))$/;"	a
+[15]	demo.htm	/^<P><STRONG><a name="[15]"><\/a>set_permanent_flags<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[15a]	demo.htm	/^<P><STRONG><a name="[15a]"><\/a>image_relocation<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, image_relocation.o(.text))$/;"	a
+[15b]	demo.htm	/^<P><STRONG><a name="[15b]"><\/a>__aeabi_memcpy8<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)$/;"	a
+[15c]	demo.htm	/^<P><STRONG><a name="[15c]"><\/a>__aeabi_memmove4<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memmovea.o(.text), UNUSED)$/;"	a
+[15d]	demo.htm	/^<P><STRONG><a name="[15d]"><\/a>__aeabi_memmove8<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, memmovea.o(.text), UNUSED)$/;"	a
+[15e]	demo.htm	/^<P><STRONG><a name="[15e]"><\/a>_memset$wrapper<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)$/;"	a
+[15f]	demo.htm	/^<P><STRONG><a name="[15f]"><\/a>__main_after_scatterload<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))$/;"	a
+[160]	demo.htm	/^<P><STRONG><a name="[160]"><\/a>internal_alloc<\/STRONG> (Thumb, 66 bytes, Stack size 24 bytes, mallocr.o(i.internal_alloc))$/;"	a
+[161]	demo.htm	/^<P><STRONG><a name="[161]"><\/a>_main_stk<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))$/;"	a
+[162]	demo.htm	/^<P><STRONG><a name="[162]"><\/a>_main_init<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7.o(.ARM.Collect$$$$00000007))$/;"	a
+[163]	demo.htm	/^<P><STRONG><a name="[163]"><\/a>tpm_get_key_slot<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
+[164]	demo.htm	/^<P><STRONG><a name="[164]"><\/a>tpm_get_session_slot<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
+[165]	demo.htm	/^<P><STRONG><a name="[165]"><\/a>tpm_get_daa_slot<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_handles.o(.text), UNUSED)$/;"	a
+[166]	demo.htm	/^<P><STRONG><a name="[166]"><\/a>get_keyinfo<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[167]	demo.htm	/^<P><STRONG><a name="[167]"><\/a>led_control<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[168]	demo.htm	/^<P><STRONG><a name="[168]"><\/a>get_tickcount<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[169]	demo.htm	/^<P><STRONG><a name="[169]"><\/a>get_realtime<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[16]	demo.htm	/^<P><STRONG><a name="[16]"><\/a>TPM_Init<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_startup.o(.text))$/;"	a
+[16a]	demo.htm	/^<P><STRONG><a name="[16a]"><\/a>get_expiretime<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[16b]	demo.htm	/^<P><STRONG><a name="[16b]"><\/a>get_sharememory<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[16c]	demo.htm	/^<P><STRONG><a name="[16c]"><\/a>set_sharememory<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[16d]	demo.htm	/^<P><STRONG><a name="[16d]"><\/a>ecc_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[16e]	demo.htm	/^<P><STRONG><a name="[16e]"><\/a>ecc_sign<\/STRONG> (Thumb, 30 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[16f]	demo.htm	/^<P><STRONG><a name="[16f]"><\/a>ecc_verify<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[170]	demo.htm	/^<P><STRONG><a name="[170]"><\/a>sm2_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[171]	demo.htm	/^<P><STRONG><a name="[171]"><\/a>sm2_sign<\/STRONG> (Thumb, 30 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[172]	demo.htm	/^<P><STRONG><a name="[172]"><\/a>sm2_verify<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[173]	demo.htm	/^<P><STRONG><a name="[173]"><\/a>tdes<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[174]	demo.htm	/^<P><STRONG><a name="[174]"><\/a>sm4<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[175]	demo.htm	/^<P><STRONG><a name="[175]"><\/a>sha1<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[176]	demo.htm	/^<P><STRONG><a name="[176]"><\/a>sm3<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[177]	demo.htm	/^<P><STRONG><a name="[177]"><\/a>seed<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[178]	demo.htm	/^<P><STRONG><a name="[178]"><\/a>get_pinstate<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[179]	demo.htm	/^<P><STRONG><a name="[179]"><\/a>__aeabi_uidiv<\/STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)$/;"	a
+[17]	demo.htm	/^<P><STRONG><a name="[17]"><\/a>save_flags<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[17a]	demo.htm	/^<P><STRONG><a name="[17a]"><\/a>__aeabi_memset4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
+[17b]	demo.htm	/^<P><STRONG><a name="[17b]"><\/a>__aeabi_memset8<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
+[17c]	demo.htm	/^<P><STRONG><a name="[17c]"><\/a>__aeabi_memclr8<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)$/;"	a
+[17d]	demo.htm	/^<P><STRONG><a name="[17d]"><\/a>__rt_uread4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, uread4.o(.text), UNUSED)$/;"	a
+[17e]	demo.htm	/^<P><STRONG><a name="[17e]"><\/a>_uread4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, uread4.o(.text), UNUSED)$/;"	a
+[17f]	demo.htm	/^<P><STRONG><a name="[17f]"><\/a>__scatterload_rt2<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)$/;"	a
+[180]	demo.htm	/^<P><STRONG><a name="[180]"><\/a>__scatterload_copy<\/STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)$/;"	a
+[181]	demo.htm	/^<P><STRONG><a name="[181]"><\/a>__scatterload_null<\/STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)$/;"	a
+[182]	demo.htm	/^<P><STRONG><a name="[182]"><\/a>__scatterload_zeroinit<\/STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)$/;"	a
+[18]	demo.htm	/^<P><STRONG><a name="[18]"><\/a>restore_flags<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[19]	demo.htm	/^<P><STRONG><a name="[19]"><\/a>tpm_emulator_shutdown<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text), UNUSED)$/;"	a
 [1]	demo.htm	/^<P><STRONG><a name="[1]"><\/a>NMI_Handler<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[1a]	demo.htm	/^<P><STRONG><a name="[1a]"><\/a>tpm_sha1_init<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, sha1.o(.text))$/;"	a
-[1b]	demo.htm	/^<P><STRONG><a name="[1b]"><\/a>tpm_sha1_update_be32<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, sha1.o(.text))$/;"	a
-[1c]	demo.htm	/^<P><STRONG><a name="[1c]"><\/a>tpm_sha1_update<\/STRONG> (Thumb, 110 bytes, Stack size 32 bytes, sha1.o(.text))$/;"	a
-[1d]	demo.htm	/^<P><STRONG><a name="[1d]"><\/a>tpm_sha1_final<\/STRONG> (Thumb, 150 bytes, Stack size 32 bytes, sha1.o(.text))$/;"	a
-[1e]	demo.htm	/^<P><STRONG><a name="[1e]"><\/a>tpm_compute_out_param_digest<\/STRONG> (Thumb, 82 bytes, Stack size 112 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[1f]	demo.htm	/^<P><STRONG><a name="[1f]"><\/a>tpm_get_out_param_offset<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[20]	demo.htm	/^<P><STRONG><a name="[20]"><\/a>tpm_setup_rsp_auth<\/STRONG> (Thumb, 168 bytes, Stack size 168 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[21]	demo.htm	/^<P><STRONG><a name="[21]"><\/a>tpm_hmac_init<\/STRONG> (Thumb, 130 bytes, Stack size 104 bytes, hmac.o(.text))$/;"	a
-[22]	demo.htm	/^<P><STRONG><a name="[22]"><\/a>tpm_hmac_update<\/STRONG> (Thumb, 8 bytes, Stack size 8 bytes, hmac.o(.text))$/;"	a
-[23]	demo.htm	/^<P><STRONG><a name="[23]"><\/a>tpm_hmac_final<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, hmac.o(.text))$/;"	a
-[24]	demo.htm	/^<P><STRONG><a name="[24]"><\/a>execute_TPM_TakeOwnership<\/STRONG> (Thumb, 274 bytes, Stack size 296 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[25]	demo.htm	/^<P><STRONG><a name="[25]"><\/a>tpm_unmarshal_UINT16<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[26]	demo.htm	/^<P><STRONG><a name="[26]"><\/a>tpm_unmarshal_BLOB<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[27]	demo.htm	/^<P><STRONG><a name="[27]"><\/a>tpm_unmarshal_TPM_KEY<\/STRONG> (Thumb, 186 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[28]	demo.htm	/^<P><STRONG><a name="[28]"><\/a>TPM_TakeOwnership<\/STRONG> (Thumb, 410 bytes, Stack size 232 bytes, tpm_owner.o(.text))$/;"	a
-[29]	demo.htm	/^<P><STRONG><a name="[29]"><\/a>malloc<\/STRONG> (Thumb, 54 bytes, Stack size 24 bytes, mallocr.o(i.__malloc$realloc))$/;"	a
+[1a]	demo.htm	/^<P><STRONG><a name="[1a]"><\/a>TPM_SaveState<\/STRONG> (Thumb, 28 bytes, Stack size 0 bytes, tpm_startup.o(.text))$/;"	a
+[1b]	demo.htm	/^<P><STRONG><a name="[1b]"><\/a>tpm_compute_in_param_digest<\/STRONG> (Thumb, 76 bytes, Stack size 104 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[1c]	demo.htm	/^<P><STRONG><a name="[1c]"><\/a>tpm_sha1_init<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, sha1.o(.text))$/;"	a
+[1d]	demo.htm	/^<P><STRONG><a name="[1d]"><\/a>tpm_sha1_update_be32<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, sha1.o(.text))$/;"	a
+[1e]	demo.htm	/^<P><STRONG><a name="[1e]"><\/a>tpm_sha1_update<\/STRONG> (Thumb, 110 bytes, Stack size 32 bytes, sha1.o(.text))$/;"	a
+[1f]	demo.htm	/^<P><STRONG><a name="[1f]"><\/a>tpm_sha1_final<\/STRONG> (Thumb, 150 bytes, Stack size 32 bytes, sha1.o(.text))$/;"	a
+[20]	demo.htm	/^<P><STRONG><a name="[20]"><\/a>tpm_compute_out_param_digest<\/STRONG> (Thumb, 82 bytes, Stack size 112 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[21]	demo.htm	/^<P><STRONG><a name="[21]"><\/a>tpm_get_out_param_offset<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[22]	demo.htm	/^<P><STRONG><a name="[22]"><\/a>tpm_setup_rsp_auth<\/STRONG> (Thumb, 168 bytes, Stack size 168 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[23]	demo.htm	/^<P><STRONG><a name="[23]"><\/a>tpm_hmac_init<\/STRONG> (Thumb, 130 bytes, Stack size 104 bytes, hmac.o(.text))$/;"	a
+[24]	demo.htm	/^<P><STRONG><a name="[24]"><\/a>tpm_hmac_update<\/STRONG> (Thumb, 8 bytes, Stack size 8 bytes, hmac.o(.text))$/;"	a
+[25]	demo.htm	/^<P><STRONG><a name="[25]"><\/a>tpm_hmac_final<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, hmac.o(.text))$/;"	a
+[26]	demo.htm	/^<P><STRONG><a name="[26]"><\/a>execute_TPM_TakeOwnership<\/STRONG> (Thumb, 274 bytes, Stack size 296 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[27]	demo.htm	/^<P><STRONG><a name="[27]"><\/a>tpm_unmarshal_UINT16<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[28]	demo.htm	/^<P><STRONG><a name="[28]"><\/a>tpm_unmarshal_BLOB<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[29]	demo.htm	/^<P><STRONG><a name="[29]"><\/a>tpm_unmarshal_TPM_KEY<\/STRONG> (Thumb, 186 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
 [2]	demo.htm	/^<P><STRONG><a name="[2]"><\/a>HardFault_Handler<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[2a]	demo.htm	/^<P><STRONG><a name="[2a]"><\/a>tpm_marshal_TPM_KEY<\/STRONG> (Thumb, 178 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[2b]	demo.htm	/^<P><STRONG><a name="[2b]"><\/a>free<\/STRONG> (Thumb, 94 bytes, Stack size 12 bytes, mallocr.o(i.__free$realloc))$/;"	a
-[2c]	demo.htm	/^<P><STRONG><a name="[2c]"><\/a>execute_TPM_CreateWrapKey<\/STRONG> (Thumb, 236 bytes, Stack size 312 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[2d]	demo.htm	/^<P><STRONG><a name="[2d]"><\/a>tpm_unmarshal_TPM_AUTHDATA<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[2e]	demo.htm	/^<P><STRONG><a name="[2e]"><\/a>TPM_CreateWrapKey<\/STRONG> (Thumb, 348 bytes, Stack size 408 bytes, tpm_storage.o(.text))$/;"	a
-[2f]	demo.htm	/^<P><STRONG><a name="[2f]"><\/a>execute_TPM_GetPubKey<\/STRONG> (Thumb, 176 bytes, Stack size 64 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[30]	demo.htm	/^<P><STRONG><a name="[30]"><\/a>TPM_GetPubKey<\/STRONG> (Thumb, 114 bytes, Stack size 136 bytes, tpm_storage.o(.text))$/;"	a
-[31]	demo.htm	/^<P><STRONG><a name="[31]"><\/a>tpm_marshal_TPM_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[32]	demo.htm	/^<P><STRONG><a name="[32]"><\/a>execute_TPM_UnBind<\/STRONG> (Thumb, 196 bytes, Stack size 56 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[33]	demo.htm	/^<P><STRONG><a name="[33]"><\/a>TPM_UnBind<\/STRONG> (Thumb, 214 bytes, Stack size 168 bytes, tpm_storage.o(.text))$/;"	a
-[34]	demo.htm	/^<P><STRONG><a name="[34]"><\/a>tpm_marshal_UINT32<\/STRONG> (Thumb, 52 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[35]	demo.htm	/^<P><STRONG><a name="[35]"><\/a>tpm_execute_command<\/STRONG> (Thumb, 482 bytes, Stack size 56 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[36]	demo.htm	/^<P><STRONG><a name="[36]"><\/a>__aeabi_memclr4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
-[37]	demo.htm	/^<P><STRONG><a name="[37]"><\/a>tpm_check_status_and_mode<\/STRONG> (Thumb, 294 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[38]	demo.htm	/^<P><STRONG><a name="[38]"><\/a>tpm_setup_error_response<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[39]	demo.htm	/^<P><STRONG><a name="[39]"><\/a>TPM_Startup<\/STRONG> (Thumb, 276 bytes, Stack size 384 bytes, tpm_startup.o(.text))$/;"	a
+[2a]	demo.htm	/^<P><STRONG><a name="[2a]"><\/a>TPM_TakeOwnership<\/STRONG> (Thumb, 414 bytes, Stack size 232 bytes, tpm_owner.o(.text))$/;"	a
+[2b]	demo.htm	/^<P><STRONG><a name="[2b]"><\/a>malloc<\/STRONG> (Thumb, 54 bytes, Stack size 24 bytes, mallocr.o(i.__malloc$realloc))$/;"	a
+[2c]	demo.htm	/^<P><STRONG><a name="[2c]"><\/a>tpm_marshal_TPM_KEY<\/STRONG> (Thumb, 178 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[2d]	demo.htm	/^<P><STRONG><a name="[2d]"><\/a>free<\/STRONG> (Thumb, 94 bytes, Stack size 12 bytes, mallocr.o(i.__free$realloc))$/;"	a
+[2e]	demo.htm	/^<P><STRONG><a name="[2e]"><\/a>execute_TPM_CreateWrapKey<\/STRONG> (Thumb, 230 bytes, Stack size 312 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[2f]	demo.htm	/^<P><STRONG><a name="[2f]"><\/a>tpm_unmarshal_TPM_AUTHDATA<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[30]	demo.htm	/^<P><STRONG><a name="[30]"><\/a>TPM_CreateWrapKey<\/STRONG> (Thumb, 370 bytes, Stack size 408 bytes, tpm_storage.o(.text))$/;"	a
+[31]	demo.htm	/^<P><STRONG><a name="[31]"><\/a>execute_TPM_GetPubKey<\/STRONG> (Thumb, 180 bytes, Stack size 64 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[32]	demo.htm	/^<P><STRONG><a name="[32]"><\/a>TPM_GetPubKey<\/STRONG> (Thumb, 114 bytes, Stack size 136 bytes, tpm_storage.o(.text))$/;"	a
+[33]	demo.htm	/^<P><STRONG><a name="[33]"><\/a>tpm_marshal_TPM_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[34]	demo.htm	/^<P><STRONG><a name="[34]"><\/a>execute_TPM_CertifyKey<\/STRONG> (Thumb, 262 bytes, Stack size 232 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[35]	demo.htm	/^<P><STRONG><a name="[35]"><\/a>tpm_unmarshal_TPM_NONCE<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[36]	demo.htm	/^<P><STRONG><a name="[36]"><\/a>TPM_CertifyKey<\/STRONG> (Thumb, 566 bytes, Stack size 416 bytes, tpm_crypto.o(.text))$/;"	a
+[37]	demo.htm	/^<P><STRONG><a name="[37]"><\/a>tpm_marshal_TPM_CERTIFY_INFO<\/STRONG> (Thumb, 248 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[38]	demo.htm	/^<P><STRONG><a name="[38]"><\/a>tpm_marshal_UINT32<\/STRONG> (Thumb, 52 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[39]	demo.htm	/^<P><STRONG><a name="[39]"><\/a>execute_TPM_Quote<\/STRONG> (Thumb, 198 bytes, Stack size 568 bytes, tpm_cmd_handler.o(.text))$/;"	a
 [3]	demo.htm	/^<P><STRONG><a name="[3]"><\/a>SVC_Handler<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[3a]	demo.htm	/^<P><STRONG><a name="[3a]"><\/a>TPM_OIAP<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, tpm_authorization.o(.text))$/;"	a
-[3b]	demo.htm	/^<P><STRONG><a name="[3b]"><\/a>tpm_marshal_TPM_NONCE<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[3c]	demo.htm	/^<P><STRONG><a name="[3c]"><\/a>execute_TPM_OSAP<\/STRONG> (Thumb, 166 bytes, Stack size 104 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[3d]	demo.htm	/^<P><STRONG><a name="[3d]"><\/a>execute_TPM_LoadKey<\/STRONG> (Thumb, 122 bytes, Stack size 152 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[3e]	demo.htm	/^<P><STRONG><a name="[3e]"><\/a>execute_TPM_LoadKey2<\/STRONG> (Thumb, 120 bytes, Stack size 152 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[3f]	demo.htm	/^<P><STRONG><a name="[3f]"><\/a>TPM_FlushSpecific<\/STRONG> (Thumb, 160 bytes, Stack size 16 bytes, tpm_eviction.o(.text))$/;"	a
-[40]	demo.htm	/^<P><STRONG><a name="[40]"><\/a>read_TPM_STANY_DATA_transExclusive<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[41]	demo.htm	/^<P><STRONG><a name="[41]"><\/a>tpm_unmarshal_TPM_REQUEST<\/STRONG> (Thumb, 204 bytes, Stack size 40 bytes, tpm_marshalling.o(.text))$/;"	a
-[42]	demo.htm	/^<P><STRONG><a name="[42]"><\/a>tpm_marshal_TPM_RESPONSE<\/STRONG> (Thumb, 118 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
-[43]	demo.htm	/^<P><STRONG><a name="[43]"><\/a>tpm_unmarshal_TPM_NONCE<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[44]	demo.htm	/^<P><STRONG><a name="[44]"><\/a>TPM_OSAP<\/STRONG> (Thumb, 290 bytes, Stack size 232 bytes, tpm_authorization.o(.text))$/;"	a
-[45]	demo.htm	/^<P><STRONG><a name="[45]"><\/a>TPM_LoadKey<\/STRONG> (Thumb, 406 bytes, Stack size 376 bytes, tpm_storage.o(.text))$/;"	a
-[46]	demo.htm	/^<P><STRONG><a name="[46]"><\/a>TPM_LoadKey2<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, tpm_storage.o(.text))$/;"	a
-[47]	demo.htm	/^<P><STRONG><a name="[47]"><\/a>set_nonce_rand<\/STRONG> (Thumb, 10 bytes, Stack size 8 bytes, tpm_startup.o(.text), UNUSED)$/;"	a
-[48]	demo.htm	/^<P><STRONG><a name="[48]"><\/a>get_random<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text))$/;"	a
-[49]	demo.htm	/^<P><STRONG><a name="[49]"><\/a>set_TPM_STANY_DATA_zero<\/STRONG> (Thumb, 62 bytes, Stack size 536 bytes, tpm_data.o(.text))$/;"	a
+[3a]	demo.htm	/^<P><STRONG><a name="[3a]"><\/a>tpm_unmarshal_TPM_PCR_SELECTION<\/STRONG> (Thumb, 42 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[3b]	demo.htm	/^<P><STRONG><a name="[3b]"><\/a>TPM_Quote<\/STRONG> (Thumb, 196 bytes, Stack size 240 bytes, tpm_integrity.o(.text))$/;"	a
+[3c]	demo.htm	/^<P><STRONG><a name="[3c]"><\/a>tpm_marshal_TPM_PCR_COMPOSITE<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[3d]	demo.htm	/^<P><STRONG><a name="[3d]"><\/a>tpm_execute_command<\/STRONG> (Thumb, 672 bytes, Stack size 56 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[3e]	demo.htm	/^<P><STRONG><a name="[3e]"><\/a>__aeabi_memclr4<\/STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
+[3f]	demo.htm	/^<P><STRONG><a name="[3f]"><\/a>tpm_check_status_and_mode<\/STRONG> (Thumb, 294 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[40]	demo.htm	/^<P><STRONG><a name="[40]"><\/a>tpm_setup_error_response<\/STRONG> (Thumb, 18 bytes, Stack size 0 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[41]	demo.htm	/^<P><STRONG><a name="[41]"><\/a>TPM_Startup<\/STRONG> (Thumb, 276 bytes, Stack size 384 bytes, tpm_startup.o(.text))$/;"	a
+[42]	demo.htm	/^<P><STRONG><a name="[42]"><\/a>TPM_FlushSpecific<\/STRONG> (Thumb, 162 bytes, Stack size 16 bytes, tpm_eviction.o(.text))$/;"	a
+[43]	demo.htm	/^<P><STRONG><a name="[43]"><\/a>TPM_OIAP<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, tpm_authorization.o(.text))$/;"	a
+[44]	demo.htm	/^<P><STRONG><a name="[44]"><\/a>tpm_marshal_TPM_NONCE<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[45]	demo.htm	/^<P><STRONG><a name="[45]"><\/a>execute_TPM_OSAP<\/STRONG> (Thumb, 166 bytes, Stack size 104 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[46]	demo.htm	/^<P><STRONG><a name="[46]"><\/a>execute_TPM_LoadKey<\/STRONG> (Thumb, 122 bytes, Stack size 152 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[47]	demo.htm	/^<P><STRONG><a name="[47]"><\/a>execute_TPM_LoadKey2<\/STRONG> (Thumb, 120 bytes, Stack size 152 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[48]	demo.htm	/^<P><STRONG><a name="[48]"><\/a>execute_TPM_UnBind<\/STRONG> (Thumb, 172 bytes, Stack size 48 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[49]	demo.htm	/^<P><STRONG><a name="[49]"><\/a>execute_TPM_MakeIdentity<\/STRONG> (Thumb, 194 bytes, Stack size 328 bytes, tpm_cmd_handler.o(.text))$/;"	a
 [4]	demo.htm	/^<P><STRONG><a name="[4]"><\/a>PendSV_Handler<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[4a]	demo.htm	/^<P><STRONG><a name="[4a]"><\/a>write_TPM_STANY_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[4b]	demo.htm	/^<P><STRONG><a name="[4b]"><\/a>write_TPM_STANY_DATA_contextNonceSession<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[4c]	demo.htm	/^<P><STRONG><a name="[4c]"><\/a>read_TPM_PERMANENT_DATA_pcrAttrib<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[4d]	demo.htm	/^<P><STRONG><a name="[4d]"><\/a>__aeabi_memset<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
-[4e]	demo.htm	/^<P><STRONG><a name="[4e]"><\/a>write_TPM_PERMANENT_DATA_pcrValue<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[4f]	demo.htm	/^<P><STRONG><a name="[4f]"><\/a>__aeabi_memclr<\/STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
-[50]	demo.htm	/^<P><STRONG><a name="[50]"><\/a>set_TPM_STCLEAR_DATA_zero<\/STRONG> (Thumb, 26 bytes, Stack size 48 bytes, tpm_data.o(.text))$/;"	a
-[51]	demo.htm	/^<P><STRONG><a name="[51]"><\/a>write_TPM_STCLEAR_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[52]	demo.htm	/^<P><STRONG><a name="[52]"><\/a>read_TPM_PERMANENT_DATA_keys<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[53]	demo.htm	/^<P><STRONG><a name="[53]"><\/a>write_TPM_STCLEAR_DATA_contextNonceKey<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[54]	demo.htm	/^<P><STRONG><a name="[54]"><\/a>write_TPM_STCLEAR_DATA_countID<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[55]	demo.htm	/^<P><STRONG><a name="[55]"><\/a>write_TPM_PERMANENT_DATA_nvStorage<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[56]	demo.htm	/^<P><STRONG><a name="[56]"><\/a>debug<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[57]	demo.htm	/^<P><STRONG><a name="[57]"><\/a>debug_stany_flags<\/STRONG> (Thumb, 50 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[58]	demo.htm	/^<P><STRONG><a name="[58]"><\/a>write_TPM_PERMANENT_DATA<\/STRONG> (Thumb, 158 bytes, Stack size 24 bytes, tpm_data.o(.text))$/;"	a
-[59]	demo.htm	/^<P><STRONG><a name="[59]"><\/a>write_file<\/STRONG> (Thumb, 28 bytes, Stack size 16 bytes, api.o(.text))$/;"	a
+[4a]	demo.htm	/^<P><STRONG><a name="[4a]"><\/a>execute_TPM_Extend<\/STRONG> (Thumb, 106 bytes, Stack size 64 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[4b]	demo.htm	/^<P><STRONG><a name="[4b]"><\/a>TPM_PCRRead<\/STRONG> (Thumb, 38 bytes, Stack size 32 bytes, tpm_integrity.o(.text))$/;"	a
+[4c]	demo.htm	/^<P><STRONG><a name="[4c]"><\/a>tpm_marshal_TPM_DIGEST<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[4d]	demo.htm	/^<P><STRONG><a name="[4d]"><\/a>read_TPM_STANY_DATA_transExclusive<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[4e]	demo.htm	/^<P><STRONG><a name="[4e]"><\/a>tpm_unmarshal_TPM_REQUEST<\/STRONG> (Thumb, 204 bytes, Stack size 40 bytes, tpm_marshalling.o(.text))$/;"	a
+[4f]	demo.htm	/^<P><STRONG><a name="[4f]"><\/a>tpm_marshal_TPM_RESPONSE<\/STRONG> (Thumb, 118 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[50]	demo.htm	/^<P><STRONG><a name="[50]"><\/a>TPM_OSAP<\/STRONG> (Thumb, 290 bytes, Stack size 232 bytes, tpm_authorization.o(.text))$/;"	a
+[51]	demo.htm	/^<P><STRONG><a name="[51]"><\/a>TPM_LoadKey<\/STRONG> (Thumb, 394 bytes, Stack size 376 bytes, tpm_storage.o(.text))$/;"	a
+[52]	demo.htm	/^<P><STRONG><a name="[52]"><\/a>TPM_LoadKey2<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, tpm_storage.o(.text))$/;"	a
+[53]	demo.htm	/^<P><STRONG><a name="[53]"><\/a>TPM_UnBind<\/STRONG> (Thumb, 248 bytes, Stack size 176 bytes, tpm_storage.o(.text))$/;"	a
+[54]	demo.htm	/^<P><STRONG><a name="[54]"><\/a>tpm_unmarshal_TPM_DIGEST<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[55]	demo.htm	/^<P><STRONG><a name="[55]"><\/a>TPM_MakeIdentity<\/STRONG> (Thumb, 600 bytes, Stack size 376 bytes, tpm_identity.o(.text))$/;"	a
+[56]	demo.htm	/^<P><STRONG><a name="[56]"><\/a>TPM_Extend<\/STRONG> (Thumb, 126 bytes, Stack size 136 bytes, tpm_integrity.o(.text))$/;"	a
+[57]	demo.htm	/^<P><STRONG><a name="[57]"><\/a>set_nonce_rand<\/STRONG> (Thumb, 10 bytes, Stack size 8 bytes, tpm_startup.o(.text), UNUSED)$/;"	a
+[58]	demo.htm	/^<P><STRONG><a name="[58]"><\/a>get_random<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text))$/;"	a
+[59]	demo.htm	/^<P><STRONG><a name="[59]"><\/a>set_TPM_STANY_DATA_zero<\/STRONG> (Thumb, 62 bytes, Stack size 536 bytes, tpm_data.o(.text))$/;"	a
 [5]	demo.htm	/^<P><STRONG><a name="[5]"><\/a>SysTick_Handler<\/STRONG> (Thumb, 2 bytes, Stack size 0 bytes, startup.o(.text))$/;"	a
-[5a]	demo.htm	/^<P><STRONG><a name="[5a]"><\/a>write_TPM_PERMANENT_DATA_nvDataSize<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[5b]	demo.htm	/^<P><STRONG><a name="[5b]"><\/a>write_TPM_PERMANENT_DATA_nvData_Stuff<\/STRONG> (Thumb, 72 bytes, Stack size 528 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[5c]	demo.htm	/^<P><STRONG><a name="[5c]"><\/a>write_TPM_PERMANENT_DATA_cmd_durations<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[5d]	demo.htm	/^<P><STRONG><a name="[5d]"><\/a>write_TPM_PERMANENT_DATA_tis_timeouts<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[5e]	demo.htm	/^<P><STRONG><a name="[5e]"><\/a>read_TPM_STANY_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[5f]	demo.htm	/^<P><STRONG><a name="[5f]"><\/a>read_file<\/STRONG> (Thumb, 28 bytes, Stack size 16 bytes, api.o(.text))$/;"	a
-[60]	demo.htm	/^<P><STRONG><a name="[60]"><\/a>read_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[61]	demo.htm	/^<P><STRONG><a name="[61]"><\/a>read_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[62]	demo.htm	/^<P><STRONG><a name="[62]"><\/a>write_TPM_STANY_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[63]	demo.htm	/^<P><STRONG><a name="[63]"><\/a>write_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[64]	demo.htm	/^<P><STRONG><a name="[64]"><\/a>write_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[65]	demo.htm	/^<P><STRONG><a name="[65]"><\/a>write_TPM_PERMANENT_DATA_keys_pubkeyFileid<\/STRONG> (Thumb, 22 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[66]	demo.htm	/^<P><STRONG><a name="[66]"><\/a>write_TPM_PERMANENT_DATA_keys_keyFileid<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[67]	demo.htm	/^<P><STRONG><a name="[67]"><\/a>write_TPM_PERMANENT_DATA_ekReset<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[68]	demo.htm	/^<P><STRONG><a name="[68]"><\/a>write_TPM_PERMANENT_DATA_tpmDAASeed<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[69]	demo.htm	/^<P><STRONG><a name="[69]"><\/a>write_TPM_PERMANENT_DATA_ekFileid<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[5a]	demo.htm	/^<P><STRONG><a name="[5a]"><\/a>write_TPM_STANY_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[5b]	demo.htm	/^<P><STRONG><a name="[5b]"><\/a>write_TPM_STANY_DATA_contextNonceSession<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[5c]	demo.htm	/^<P><STRONG><a name="[5c]"><\/a>read_TPM_PERMANENT_DATA_pcrAttribs<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[5d]	demo.htm	/^<P><STRONG><a name="[5d]"><\/a>__aeabi_memset<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
+[5e]	demo.htm	/^<P><STRONG><a name="[5e]"><\/a>write_TPM_PERMANENT_DATA_pcrValue<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[5f]	demo.htm	/^<P><STRONG><a name="[5f]"><\/a>__aeabi_memclr<\/STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))$/;"	a
+[60]	demo.htm	/^<P><STRONG><a name="[60]"><\/a>set_TPM_STCLEAR_DATA_zero<\/STRONG> (Thumb, 26 bytes, Stack size 48 bytes, tpm_data.o(.text))$/;"	a
+[61]	demo.htm	/^<P><STRONG><a name="[61]"><\/a>write_TPM_STCLEAR_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[62]	demo.htm	/^<P><STRONG><a name="[62]"><\/a>read_TPM_PERMANENT_DATA_keys<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[63]	demo.htm	/^<P><STRONG><a name="[63]"><\/a>write_TPM_STCLEAR_DATA_contextNonceKey<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[64]	demo.htm	/^<P><STRONG><a name="[64]"><\/a>write_TPM_STCLEAR_DATA_countID<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[65]	demo.htm	/^<P><STRONG><a name="[65]"><\/a>write_TPM_PERMANENT_DATA_nvStorage<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[66]	demo.htm	/^<P><STRONG><a name="[66]"><\/a>debug<\/STRONG> (Thumb, 80 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[67]	demo.htm	/^<P><STRONG><a name="[67]"><\/a>debug_stany_flags<\/STRONG> (Thumb, 50 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[68]	demo.htm	/^<P><STRONG><a name="[68]"><\/a>write_TPM_PERMANENT_DATA<\/STRONG> (Thumb, 160 bytes, Stack size 24 bytes, tpm_data.o(.text))$/;"	a
+[69]	demo.htm	/^<P><STRONG><a name="[69]"><\/a>write_file<\/STRONG> (Thumb, 28 bytes, Stack size 16 bytes, api.o(.text))$/;"	a
 [6]	demo.htm	/^<P><STRONG><a name="[6]"><\/a>main<\/STRONG> (Thumb, 96 bytes, Stack size 24 bytes, main.o(.text))$/;"	a
-[6a]	demo.htm	/^<P><STRONG><a name="[6a]"><\/a>write_TPM_PERMANENT_DATA_pcrAttrib<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[6b]	demo.htm	/^<P><STRONG><a name="[6b]"><\/a>write_TPM_PERMANENT_DATA_rngState<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[6c]	demo.htm	/^<P><STRONG><a name="[6c]"><\/a>write_TPM_PERMANENT_DATA_version<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[6d]	demo.htm	/^<P><STRONG><a name="[6d]"><\/a>write_TPM_PERMANENT_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[6e]	demo.htm	/^<P><STRONG><a name="[6e]"><\/a>tpm_init_data<\/STRONG> (Thumb, 404 bytes, Stack size 792 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[6f]	demo.htm	/^<P><STRONG><a name="[6f]"><\/a>rsa_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text))$/;"	a
-[70]	demo.htm	/^<P><STRONG><a name="[70]"><\/a>delete_tpmdata_files<\/STRONG> (Thumb, 154 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[71]	demo.htm	/^<P><STRONG><a name="[71]"><\/a>delete_file<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
-[72]	demo.htm	/^<P><STRONG><a name="[72]"><\/a>create_tpmdata_files<\/STRONG> (Thumb, 290 bytes, Stack size 32 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[73]	demo.htm	/^<P><STRONG><a name="[73]"><\/a>create_file<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
-[74]	demo.htm	/^<P><STRONG><a name="[74]"><\/a>read_TPM_PERMANENT_DATA<\/STRONG> (Thumb, 156 bytes, Stack size 24 bytes, tpm_data.o(.text))$/;"	a
-[75]	demo.htm	/^<P><STRONG><a name="[75]"><\/a>read_TPM_PERMANENT_DATA_tag<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[76]	demo.htm	/^<P><STRONG><a name="[76]"><\/a>read_TPM_PERMANENT_DATA_version<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[77]	demo.htm	/^<P><STRONG><a name="[77]"><\/a>write_TPM_PERMANENT_DATA_tpmProof<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[78]	demo.htm	/^<P><STRONG><a name="[78]"><\/a>read_TPM_PERMANENT_DATA_tpmProof<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[79]	demo.htm	/^<P><STRONG><a name="[79]"><\/a>write_TPM_PERMANENT_DATA_daaProof<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[6a]	demo.htm	/^<P><STRONG><a name="[6a]"><\/a>write_TPM_PERMANENT_DATA_nvDataSize<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[6b]	demo.htm	/^<P><STRONG><a name="[6b]"><\/a>write_TPM_PERMANENT_DATA_nvData_Stuff<\/STRONG> (Thumb, 72 bytes, Stack size 528 bytes, tpm_data.o(.text))$/;"	a
+[6c]	demo.htm	/^<P><STRONG><a name="[6c]"><\/a>write_TPM_PERMANENT_DATA_cmd_durations<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[6d]	demo.htm	/^<P><STRONG><a name="[6d]"><\/a>write_TPM_PERMANENT_DATA_tis_timeouts<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[6e]	demo.htm	/^<P><STRONG><a name="[6e]"><\/a>read_TPM_STANY_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[6f]	demo.htm	/^<P><STRONG><a name="[6f]"><\/a>read_file<\/STRONG> (Thumb, 28 bytes, Stack size 16 bytes, api.o(.text))$/;"	a
+[70]	demo.htm	/^<P><STRONG><a name="[70]"><\/a>read_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[71]	demo.htm	/^<P><STRONG><a name="[71]"><\/a>read_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[72]	demo.htm	/^<P><STRONG><a name="[72]"><\/a>write_TPM_STANY_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[73]	demo.htm	/^<P><STRONG><a name="[73]"><\/a>write_TPM_STCLEAR_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[74]	demo.htm	/^<P><STRONG><a name="[74]"><\/a>write_TPM_PERMANENT_FLAGS<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[75]	demo.htm	/^<P><STRONG><a name="[75]"><\/a>write_TPM_PERMANENT_DATA_keys_pubkeyFileid<\/STRONG> (Thumb, 22 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[76]	demo.htm	/^<P><STRONG><a name="[76]"><\/a>write_TPM_PERMANENT_DATA_keys_keyFileid<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[77]	demo.htm	/^<P><STRONG><a name="[77]"><\/a>write_TPM_PERMANENT_DATA_keys_zero<\/STRONG> (Thumb, 38 bytes, Stack size 128 bytes, tpm_data.o(.text))$/;"	a
+[78]	demo.htm	/^<P><STRONG><a name="[78]"><\/a>write_TPM_PERMANENT_DATA_ekReset<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[79]	demo.htm	/^<P><STRONG><a name="[79]"><\/a>write_TPM_PERMANENT_DATA_tpmDAASeed<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
 [7]	demo.htm	/^<P><STRONG><a name="[7]"><\/a>__main<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))$/;"	a
-[7a]	demo.htm	/^<P><STRONG><a name="[7a]"><\/a>read_TPM_PERMANENT_DATA_counters_valid<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[7b]	demo.htm	/^<P><STRONG><a name="[7b]"><\/a>read_TPM_PERMANENT_DATA_counters_usageAuth<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[7c]	demo.htm	/^<P><STRONG><a name="[7c]"><\/a>write_TPM_PERMANENT_DATA_ownerAuth<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[7d]	demo.htm	/^<P><STRONG><a name="[7d]"><\/a>read_TPM_PERMANENT_DATA_ownerAuth<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[7e]	demo.htm	/^<P><STRONG><a name="[7e]"><\/a>write_TPM_PERMANENT_DATA_srk<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[7f]	demo.htm	/^<P><STRONG><a name="[7f]"><\/a>read_TPM_PERMANENT_DATA_srk<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[80]	demo.htm	/^<P><STRONG><a name="[80]"><\/a>read_TPM_PERMANENT_DATA_srk_usageAuth<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[81]	demo.htm	/^<P><STRONG><a name="[81]"><\/a>read_TPM_PERMANENT_DATA_srk_payload<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[82]	demo.htm	/^<P><STRONG><a name="[82]"><\/a>read_TPM_PERMANENT_DATA_rngState<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[83]	demo.htm	/^<P><STRONG><a name="[83]"><\/a>write_TPM_PERMANENT_DATA_keys_zero<\/STRONG> (Thumb, 38 bytes, Stack size 128 bytes, tpm_data.o(.text))$/;"	a
-[84]	demo.htm	/^<P><STRONG><a name="[84]"><\/a>write_TPM_PERMANENT_DATA_keys<\/STRONG> (Thumb, 58 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[85]	demo.htm	/^<P><STRONG><a name="[85]"><\/a>write_TPM_PERMANENT_DATA_keys_payload<\/STRONG> (Thumb, 22 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
-[86]	demo.htm	/^<P><STRONG><a name="[86]"><\/a>read_TPM_PERMANENT_DATA_keys_payload<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[87]	demo.htm	/^<P><STRONG><a name="[87]"><\/a>read_TPM_PERMANENT_DATA_keys_keyFileid<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[88]	demo.htm	/^<P><STRONG><a name="[88]"><\/a>read_TPM_PERMANENT_DATA_keys_pubkeyFileid<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[89]	demo.htm	/^<P><STRONG><a name="[89]"><\/a>read_TPM_PERMANENT_DATA_keys_keyControl<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[7a]	demo.htm	/^<P><STRONG><a name="[7a]"><\/a>write_TPM_PERMANENT_DATA_ekFileid<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[7b]	demo.htm	/^<P><STRONG><a name="[7b]"><\/a>write_TPM_PERMANENT_DATA_pcrAttribs<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[7c]	demo.htm	/^<P><STRONG><a name="[7c]"><\/a>write_TPM_PERMANENT_DATA_rngState<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[7d]	demo.htm	/^<P><STRONG><a name="[7d]"><\/a>write_TPM_PERMANENT_DATA_version<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[7e]	demo.htm	/^<P><STRONG><a name="[7e]"><\/a>write_TPM_PERMANENT_DATA_tag<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[7f]	demo.htm	/^<P><STRONG><a name="[7f]"><\/a>rsa_genkey<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text))$/;"	a
+[80]	demo.htm	/^<P><STRONG><a name="[80]"><\/a>delete_tpmdata_files<\/STRONG> (Thumb, 154 bytes, Stack size 16 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[81]	demo.htm	/^<P><STRONG><a name="[81]"><\/a>delete_file<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, api.o(.text), UNUSED)$/;"	a
+[82]	demo.htm	/^<P><STRONG><a name="[82]"><\/a>create_tpmdata_files<\/STRONG> (Thumb, 290 bytes, Stack size 32 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[83]	demo.htm	/^<P><STRONG><a name="[83]"><\/a>create_file<\/STRONG> (Thumb, 24 bytes, Stack size 16 bytes, api.o(.text), UNUSED)$/;"	a
+[84]	demo.htm	/^<P><STRONG><a name="[84]"><\/a>read_TPM_PERMANENT_DATA<\/STRONG> (Thumb, 154 bytes, Stack size 24 bytes, tpm_data.o(.text))$/;"	a
+[85]	demo.htm	/^<P><STRONG><a name="[85]"><\/a>read_TPM_PERMANENT_DATA_tag<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[86]	demo.htm	/^<P><STRONG><a name="[86]"><\/a>read_TPM_PERMANENT_DATA_version<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[87]	demo.htm	/^<P><STRONG><a name="[87]"><\/a>write_TPM_PERMANENT_DATA_tpmProof<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[88]	demo.htm	/^<P><STRONG><a name="[88]"><\/a>read_TPM_PERMANENT_DATA_tpmProof<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[89]	demo.htm	/^<P><STRONG><a name="[89]"><\/a>write_TPM_PERMANENT_DATA_daaProof<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
 [8]	demo.htm	/^<P><STRONG><a name="[8]"><\/a>_main_scatterload<\/STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))$/;"	a
-[8a]	demo.htm	/^<P><STRONG><a name="[8a]"><\/a>read_TPM_PERMANENT_DATA_keys_usageAuth<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[8b]	demo.htm	/^<P><STRONG><a name="[8b]"><\/a>read_TPM_PERMANENT_DATA_ekFileid<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[8c]	demo.htm	/^<P><STRONG><a name="[8c]"><\/a>write_TPM_PERMANENT_DATA_contextKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[8d]	demo.htm	/^<P><STRONG><a name="[8d]"><\/a>write_TPM_PERMANENT_DATA_delegateKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[8e]	demo.htm	/^<P><STRONG><a name="[8e]"><\/a>write_TPM_PERMANENT_DATA_daaKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[8f]	demo.htm	/^<P><STRONG><a name="[8f]"><\/a>write_TPM_PERMANENT_DATA_nvData<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
-[90]	demo.htm	/^<P><STRONG><a name="[90]"><\/a>write_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[91]	demo.htm	/^<P><STRONG><a name="[91]"><\/a>read_TPM_STANY_DATA<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[92]	demo.htm	/^<P><STRONG><a name="[92]"><\/a>write_TPM_STANY_DATA<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[93]	demo.htm	/^<P><STRONG><a name="[93]"><\/a>write_TPM_STANY_DATA_sessionsDAA<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[94]	demo.htm	/^<P><STRONG><a name="[94]"><\/a>write_TPM_STANY_DATA_sessionsDAA_zero<\/STRONG> (Thumb, 32 bytes, Stack size 864 bytes, tpm_data.o(.text))$/;"	a
-[95]	demo.htm	/^<P><STRONG><a name="[95]"><\/a>read_TPM_STANY_DATA_sessionsDAA_type<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[96]	demo.htm	/^<P><STRONG><a name="[96]"><\/a>write_TPM_STANY_DATA_sessions<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[97]	demo.htm	/^<P><STRONG><a name="[97]"><\/a>read_TPM_STANY_DATA_sessions<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[98]	demo.htm	/^<P><STRONG><a name="[98]"><\/a>read_TPM_STANY_DATA_sessions_type<\/STRONG> (Thumb, 24 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[99]	demo.htm	/^<P><STRONG><a name="[99]"><\/a>write_TPM_STANY_DATA_sessions_type<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[8a]	demo.htm	/^<P><STRONG><a name="[8a]"><\/a>read_TPM_PERMANENT_DATA_counters_valid<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[8b]	demo.htm	/^<P><STRONG><a name="[8b]"><\/a>read_TPM_PERMANENT_DATA_counters_usageAuth<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[8c]	demo.htm	/^<P><STRONG><a name="[8c]"><\/a>write_TPM_PERMANENT_DATA_ownerAuth<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[8d]	demo.htm	/^<P><STRONG><a name="[8d]"><\/a>read_TPM_PERMANENT_DATA_ownerAuth<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[8e]	demo.htm	/^<P><STRONG><a name="[8e]"><\/a>write_TPM_PERMANENT_DATA_srk<\/STRONG> (Thumb, 14 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[8f]	demo.htm	/^<P><STRONG><a name="[8f]"><\/a>read_TPM_PERMANENT_DATA_srk<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[90]	demo.htm	/^<P><STRONG><a name="[90]"><\/a>read_TPM_PERMANENT_DATA_srk_usageAuth<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[91]	demo.htm	/^<P><STRONG><a name="[91]"><\/a>read_TPM_PERMANENT_DATA_srk_payload<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[92]	demo.htm	/^<P><STRONG><a name="[92]"><\/a>read_TPM_PERMANENT_DATA_rngState<\/STRONG> (Thumb, 8 bytes, Stack size 0 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[93]	demo.htm	/^<P><STRONG><a name="[93]"><\/a>write_TPM_PERMANENT_DATA_keys<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[94]	demo.htm	/^<P><STRONG><a name="[94]"><\/a>write_TPM_PERMANENT_DATA_keys_payload<\/STRONG> (Thumb, 62 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[95]	demo.htm	/^<P><STRONG><a name="[95]"><\/a>read_TPM_PERMANENT_DATA_keys_payload<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[96]	demo.htm	/^<P><STRONG><a name="[96]"><\/a>read_TPM_PERMANENT_DATA_keys_keyFileid<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[97]	demo.htm	/^<P><STRONG><a name="[97]"><\/a>read_TPM_PERMANENT_DATA_keys_pubkeyFileid<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[98]	demo.htm	/^<P><STRONG><a name="[98]"><\/a>read_TPM_PERMANENT_DATA_keys_keyControl<\/STRONG> (Thumb, 26 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[99]	demo.htm	/^<P><STRONG><a name="[99]"><\/a>read_TPM_PERMANENT_DATA_keys_usageAuth<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
 [9]	demo.htm	/^<P><STRONG><a name="[9]"><\/a>__scatterload<\/STRONG> (Thumb, 28 bytes, Stack size 0 bytes, init.o(.text))$/;"	a
-[9a]	demo.htm	/^<P><STRONG><a name="[9a]"><\/a>write_TPM_STANY_DATA_sessions_entityType<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
-[9b]	demo.htm	/^<P><STRONG><a name="[9b]"><\/a>write_TPM_STANY_DATA_sessions_handle<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
-[9c]	demo.htm	/^<P><STRONG><a name="[9c]"><\/a>read_TPM_STANY_DATA_sessions_handle<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[9d]	demo.htm	/^<P><STRONG><a name="[9d]"><\/a>write_TPM_STANY_DATA_sessions_nonceEven<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[9e]	demo.htm	/^<P><STRONG><a name="[9e]"><\/a>write_TPM_STANY_DATA_sessions_sharedSecret<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
-[9f]	demo.htm	/^<P><STRONG><a name="[9f]"><\/a>write_TPM_STANY_DATA_sessions_zero<\/STRONG> (Thumb, 26 bytes, Stack size 184 bytes, tpm_data.o(.text))$/;"	a
-[a0]	demo.htm	/^<P><STRONG><a name="[a0]"><\/a>write_TPM_STANY_DATA_contextList<\/STRONG> (Thumb, 18 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
-[a1]	demo.htm	/^<P><STRONG><a name="[a1]"><\/a>read_TPM_STANY_DATA_contextList<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[a2]	demo.htm	/^<P><STRONG><a name="[a2]"><\/a>write_TPM_STANY_DATA_currentDAA<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[a3]	demo.htm	/^<P><STRONG><a name="[a3]"><\/a>read_TPM_STANY_DATA_currentDAA<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
-[a4]	demo.htm	/^<P><STRONG><a name="[a4]"><\/a>tpm_get_key<\/STRONG> (Thumb, 72 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
-[a5]	demo.htm	/^<P><STRONG><a name="[a5]"><\/a>tpm_get_auth<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
-[a6]	demo.htm	/^<P><STRONG><a name="[a6]"><\/a>tpm_get_transport<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
-[a7]	demo.htm	/^<P><STRONG><a name="[a7]"><\/a>tpm_get_counter<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
-[a8]	demo.htm	/^<P><STRONG><a name="[a8]"><\/a>tpm_get_daa<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
-[a9]	demo.htm	/^<P><STRONG><a name="[a9]"><\/a>tpm_unmarshal_UINT32<\/STRONG> (Thumb, 56 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[9a]	demo.htm	/^<P><STRONG><a name="[9a]"><\/a>write_TPM_PERMANENT_DATA_pcrAttrib<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[9b]	demo.htm	/^<P><STRONG><a name="[9b]"><\/a>read_TPM_PERMANENT_DATA_pcrAttrib<\/STRONG> (Thumb, 14 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[9c]	demo.htm	/^<P><STRONG><a name="[9c]"><\/a>read_TPM_PERMANENT_DATA_ekFileid<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[9d]	demo.htm	/^<P><STRONG><a name="[9d]"><\/a>write_TPM_PERMANENT_DATA_contextKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[9e]	demo.htm	/^<P><STRONG><a name="[9e]"><\/a>write_TPM_PERMANENT_DATA_delegateKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[9f]	demo.htm	/^<P><STRONG><a name="[9f]"><\/a>write_TPM_PERMANENT_DATA_daaKey<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[a0]	demo.htm	/^<P><STRONG><a name="[a0]"><\/a>write_TPM_PERMANENT_DATA_nvData<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text), UNUSED)$/;"	a
+[a1]	demo.htm	/^<P><STRONG><a name="[a1]"><\/a>read_TPM_PERMANENT_DATA_pcrValue<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[a2]	demo.htm	/^<P><STRONG><a name="[a2]"><\/a>write_TPM_STCLEAR_DATA<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[a3]	demo.htm	/^<P><STRONG><a name="[a3]"><\/a>read_TPM_STANY_DATA<\/STRONG> (Thumb, 34 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[a4]	demo.htm	/^<P><STRONG><a name="[a4]"><\/a>write_TPM_STANY_DATA<\/STRONG> (Thumb, 36 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[a5]	demo.htm	/^<P><STRONG><a name="[a5]"><\/a>write_TPM_STANY_DATA_sessionsDAA<\/STRONG> (Thumb, 16 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[a6]	demo.htm	/^<P><STRONG><a name="[a6]"><\/a>write_TPM_STANY_DATA_sessionsDAA_zero<\/STRONG> (Thumb, 32 bytes, Stack size 864 bytes, tpm_data.o(.text))$/;"	a
+[a7]	demo.htm	/^<P><STRONG><a name="[a7]"><\/a>read_TPM_STANY_DATA_sessionsDAA_type<\/STRONG> (Thumb, 28 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[a8]	demo.htm	/^<P><STRONG><a name="[a8]"><\/a>write_TPM_STANY_DATA_sessions<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[a9]	demo.htm	/^<P><STRONG><a name="[a9]"><\/a>read_TPM_STANY_DATA_sessions<\/STRONG> (Thumb, 10 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
 [a]	demo.htm	/^<P><STRONG><a name="[a]"><\/a>__aeabi_memcpy<\/STRONG> (Thumb, 32 bytes, Stack size 16 bytes, memcpya.o(.text))$/;"	a
-[aa]	demo.htm	/^<P><STRONG><a name="[aa]"><\/a>tpm_marshal_BLOB<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[ab]	demo.htm	/^<P><STRONG><a name="[ab]"><\/a>tpm_unmarshal_BYTE_ARRAY<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[ac]	demo.htm	/^<P><STRONG><a name="[ac]"><\/a>tpm_marshal_UINT32_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ad]	demo.htm	/^<P><STRONG><a name="[ad]"><\/a>tpm_marshal_UINT32<\/STRONG> (Thumb, 52 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[ae]	demo.htm	/^<P><STRONG><a name="[ae]"><\/a>tpm_unmarshal_UINT32_ARRAY<\/STRONG> (Thumb, 46 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[af]	demo.htm	/^<P><STRONG><a name="[af]"><\/a>tpm_marshal_TPM_STRUCT_VER<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[b0]	demo.htm	/^<P><STRONG><a name="[b0]"><\/a>tpm_marshal_BYTE<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
-[b1]	demo.htm	/^<P><STRONG><a name="[b1]"><\/a>tpm_unmarshal_TPM_STRUCT_VER<\/STRONG> (Thumb, 64 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[b2]	demo.htm	/^<P><STRONG><a name="[b2]"><\/a>tpm_unmarshal_BYTE<\/STRONG> (Thumb, 34 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
-[b3]	demo.htm	/^<P><STRONG><a name="[b3]"><\/a>tpm_marshal_TPM_VERSION<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[b4]	demo.htm	/^<P><STRONG><a name="[b4]"><\/a>tpm_unmarshal_TPM_VERSION<\/STRONG> (Thumb, 64 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[b5]	demo.htm	/^<P><STRONG><a name="[b5]"><\/a>tpm_marshal_TPM_DIGEST<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[b6]	demo.htm	/^<P><STRONG><a name="[b6]"><\/a>tpm_marshal_BYTE_ARRAY<\/STRONG> (Thumb, 46 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[b7]	demo.htm	/^<P><STRONG><a name="[b7]"><\/a>tpm_unmarshal_TPM_DIGEST<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[b8]	demo.htm	/^<P><STRONG><a name="[b8]"><\/a>tpm_marshal_TPM_PCRVALUE_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[b9]	demo.htm	/^<P><STRONG><a name="[b9]"><\/a>tpm_unmarshal_TPM_PCRVALUE_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[aa]	demo.htm	/^<P><STRONG><a name="[aa]"><\/a>read_TPM_STANY_DATA_sessions_type<\/STRONG> (Thumb, 24 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[ab]	demo.htm	/^<P><STRONG><a name="[ab]"><\/a>write_TPM_STANY_DATA_sessions_type<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[ac]	demo.htm	/^<P><STRONG><a name="[ac]"><\/a>write_TPM_STANY_DATA_sessions_entityType<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[ad]	demo.htm	/^<P><STRONG><a name="[ad]"><\/a>write_TPM_STANY_DATA_sessions_handle<\/STRONG> (Thumb, 20 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[ae]	demo.htm	/^<P><STRONG><a name="[ae]"><\/a>read_TPM_STANY_DATA_sessions_handle<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[af]	demo.htm	/^<P><STRONG><a name="[af]"><\/a>write_TPM_STANY_DATA_sessions_nonceEven<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[b0]	demo.htm	/^<P><STRONG><a name="[b0]"><\/a>write_TPM_STANY_DATA_sessions_sharedSecret<\/STRONG> (Thumb, 12 bytes, Stack size 0 bytes, tpm_data.o(.text))$/;"	a
+[b1]	demo.htm	/^<P><STRONG><a name="[b1]"><\/a>write_TPM_STANY_DATA_sessions_zero<\/STRONG> (Thumb, 26 bytes, Stack size 184 bytes, tpm_data.o(.text))$/;"	a
+[b2]	demo.htm	/^<P><STRONG><a name="[b2]"><\/a>write_TPM_STANY_DATA_contextList<\/STRONG> (Thumb, 18 bytes, Stack size 16 bytes, tpm_data.o(.text))$/;"	a
+[b3]	demo.htm	/^<P><STRONG><a name="[b3]"><\/a>read_TPM_STANY_DATA_contextList<\/STRONG> (Thumb, 20 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[b4]	demo.htm	/^<P><STRONG><a name="[b4]"><\/a>write_TPM_STANY_DATA_currentDAA<\/STRONG> (Thumb, 16 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[b5]	demo.htm	/^<P><STRONG><a name="[b5]"><\/a>read_TPM_STANY_DATA_currentDAA<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_data.o(.text))$/;"	a
+[b6]	demo.htm	/^<P><STRONG><a name="[b6]"><\/a>tpm_get_key<\/STRONG> (Thumb, 72 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
+[b7]	demo.htm	/^<P><STRONG><a name="[b7]"><\/a>tpm_get_auth<\/STRONG> (Thumb, 48 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
+[b8]	demo.htm	/^<P><STRONG><a name="[b8]"><\/a>tpm_get_transport<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
+[b9]	demo.htm	/^<P><STRONG><a name="[b9]"><\/a>tpm_get_counter<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
 [b]	demo.htm	/^<P><STRONG><a name="[b]"><\/a>tpm_engine_init<\/STRONG> (Thumb, 8 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[ba]	demo.htm	/^<P><STRONG><a name="[ba]"><\/a>tpm_marshal_TPM_AUTHDATA<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[bb]	demo.htm	/^<P><STRONG><a name="[bb]"><\/a>tpm_marshal_TPM_AUTH<\/STRONG> (Thumb, 56 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[bc]	demo.htm	/^<P><STRONG><a name="[bc]"><\/a>tpm_marshal_BOOL<\/STRONG> (Thumb, 36 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
-[bd]	demo.htm	/^<P><STRONG><a name="[bd]"><\/a>tpm_unmarshal_TPM_AUTH<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[be]	demo.htm	/^<P><STRONG><a name="[be]"><\/a>tpm_unmarshal_BOOL<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[bf]	demo.htm	/^<P><STRONG><a name="[bf]"><\/a>tpm_marshal_TPM_KEY_HANDLE_LIST<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c0]	demo.htm	/^<P><STRONG><a name="[c0]"><\/a>tpm_marshal_UINT16<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[c1]	demo.htm	/^<P><STRONG><a name="[c1]"><\/a>tpm_marshal_TPM_CHANGEAUTH_VALIDATE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c2]	demo.htm	/^<P><STRONG><a name="[c2]"><\/a>tpm_unmarshal_TPM_CHANGEAUTH_VALIDATE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c3]	demo.htm	/^<P><STRONG><a name="[c3]"><\/a>tpm_marshal_TPM_COUNTER_VALUE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c4]	demo.htm	/^<P><STRONG><a name="[c4]"><\/a>tpm_unmarshal_TPM_COUNTER_VALUE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c5]	demo.htm	/^<P><STRONG><a name="[c5]"><\/a>tpm_unmarshal_UINT16<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, tpm_marshalling.o(.text))$/;"	a
-[c6]	demo.htm	/^<P><STRONG><a name="[c6]"><\/a>tpm_marshal_TPM_PCR_SELECTION<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[c7]	demo.htm	/^<P><STRONG><a name="[c7]"><\/a>tpm_unmarshal_TPM_PCR_SELECTION<\/STRONG> (Thumb, 42 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[c8]	demo.htm	/^<P><STRONG><a name="[c8]"><\/a>tpm_marshal_TPM_PCR_COMPOSITE<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[c9]	demo.htm	/^<P><STRONG><a name="[c9]"><\/a>__aeabi_uidivmod<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)$/;"	a
-[c]	demo.htm	/^<P><STRONG><a name="[c]"><\/a>tpm_engine_first_time<\/STRONG> (Thumb, 18 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[ca]	demo.htm	/^<P><STRONG><a name="[ca]"><\/a>tpm_unmarshal_TPM_PCR_COMPOSITE<\/STRONG> (Thumb, 72 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[cb]	demo.htm	/^<P><STRONG><a name="[cb]"><\/a>tpm_marshal_TPM_PCR_INFO<\/STRONG> (Thumb, 158 bytes, Stack size 32 bytes, tpm_marshalling.o(.text))$/;"	a
-[cc]	demo.htm	/^<P><STRONG><a name="[cc]"><\/a>tpm_unmarshal_TPM_PCR_INFO<\/STRONG> (Thumb, 204 bytes, Stack size 32 bytes, tpm_marshalling.o(.text))$/;"	a
-[cd]	demo.htm	/^<P><STRONG><a name="[cd]"><\/a>tpm_marshal_TPM_PCR_INFO_SHORT<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ce]	demo.htm	/^<P><STRONG><a name="[ce]"><\/a>tpm_unmarshal_TPM_PCR_INFO_SHORT<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[cf]	demo.htm	/^<P><STRONG><a name="[cf]"><\/a>tpm_marshal_TPM_PCR_ATTRIBUTES<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d0]	demo.htm	/^<P><STRONG><a name="[d0]"><\/a>tpm_unmarshal_TPM_PCR_ATTRIBUTES<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d1]	demo.htm	/^<P><STRONG><a name="[d1]"><\/a>tpm_marshal_TPM_STORED_DATA<\/STRONG> (Thumb, 104 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d2]	demo.htm	/^<P><STRONG><a name="[d2]"><\/a>tpm_unmarshal_TPM_STORED_DATA<\/STRONG> (Thumb, 106 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d3]	demo.htm	/^<P><STRONG><a name="[d3]"><\/a>tpm_unmarshal_BLOB<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
-[d4]	demo.htm	/^<P><STRONG><a name="[d4]"><\/a>tpm_marshal_TPM_SEALED_DATA<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d5]	demo.htm	/^<P><STRONG><a name="[d5]"><\/a>tpm_unmarshal_TPM_SEALED_DATA<\/STRONG> (Thumb, 102 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d6]	demo.htm	/^<P><STRONG><a name="[d6]"><\/a>tpm_marshal_TPM_SYMMETRIC_KEY<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d7]	demo.htm	/^<P><STRONG><a name="[d7]"><\/a>tpm_unmarshal_TPM_SYMMETRIC_KEY<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[d8]	demo.htm	/^<P><STRONG><a name="[d8]"><\/a>tpm_marshal_TPM_SYMMETRIC_KEY_PARMS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[d9]	demo.htm	/^<P><STRONG><a name="[d9]"><\/a>tpm_unmarshal_TPM_SYMMETRIC_KEY_PARMS<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[d]	demo.htm	/^<P><STRONG><a name="[d]"><\/a>tpm_handle_command<\/STRONG> (Thumb, 72 bytes, Stack size 304 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[da]	demo.htm	/^<P><STRONG><a name="[da]"><\/a>tpm_marshal_TPM_RSA_KEY_PARMS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[db]	demo.htm	/^<P><STRONG><a name="[db]"><\/a>tpm_unmarshal_TPM_RSA_KEY_PARMS<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[dc]	demo.htm	/^<P><STRONG><a name="[dc]"><\/a>tpm_marshal_TPM_KEY_PARMS<\/STRONG> (Thumb, 126 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
-[dd]	demo.htm	/^<P><STRONG><a name="[dd]"><\/a>tpm_unmarshal_TPM_KEY_PARMS<\/STRONG> (Thumb, 124 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
-[de]	demo.htm	/^<P><STRONG><a name="[de]"><\/a>tpm_marshal_TPM_STORE_PUBKEY<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[df]	demo.htm	/^<P><STRONG><a name="[df]"><\/a>tpm_unmarshal_TPM_STORE_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[e0]	demo.htm	/^<P><STRONG><a name="[e0]"><\/a>tpm_unmarshal_TPM_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e1]	demo.htm	/^<P><STRONG><a name="[e1]"><\/a>tpm_marshal_TPM_STORE_PRIVKEY<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e2]	demo.htm	/^<P><STRONG><a name="[e2]"><\/a>tpm_unmarshal_TPM_STORE_PRIVKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[e3]	demo.htm	/^<P><STRONG><a name="[e3]"><\/a>tpm_marshal_TPM_STORE_ASYMKEY<\/STRONG> (Thumb, 86 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e4]	demo.htm	/^<P><STRONG><a name="[e4]"><\/a>tpm_unmarshal_TPM_STORE_ASYMKEY<\/STRONG> (Thumb, 84 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
-[e5]	demo.htm	/^<P><STRONG><a name="[e5]"><\/a>tpm_marshal_TPM_MIGRATIONKEYAUTH<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e6]	demo.htm	/^<P><STRONG><a name="[e6]"><\/a>tpm_unmarshal_TPM_MIGRATIONKEYAUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e7]	demo.htm	/^<P><STRONG><a name="[e7]"><\/a>tpm_marshal_TPM_CERTIFY_INFO<\/STRONG> (Thumb, 248 bytes, Stack size 24 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e8]	demo.htm	/^<P><STRONG><a name="[e8]"><\/a>tpm_unmarshal_TPM_CERTIFY_INFO<\/STRONG> (Thumb, 260 bytes, Stack size 24 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[e9]	demo.htm	/^<P><STRONG><a name="[e9]"><\/a>tpm_marshal_TPM_IDENTITY_CONTENTS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[ba]	demo.htm	/^<P><STRONG><a name="[ba]"><\/a>tpm_get_daa<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_handles.o(.text))$/;"	a
+[bb]	demo.htm	/^<P><STRONG><a name="[bb]"><\/a>tpm_unmarshal_UINT32<\/STRONG> (Thumb, 56 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[bc]	demo.htm	/^<P><STRONG><a name="[bc]"><\/a>tpm_marshal_BLOB<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[bd]	demo.htm	/^<P><STRONG><a name="[bd]"><\/a>tpm_unmarshal_BYTE_ARRAY<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[be]	demo.htm	/^<P><STRONG><a name="[be]"><\/a>tpm_marshal_UINT32_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[bf]	demo.htm	/^<P><STRONG><a name="[bf]"><\/a>tpm_marshal_UINT32<\/STRONG> (Thumb, 52 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[c0]	demo.htm	/^<P><STRONG><a name="[c0]"><\/a>tpm_unmarshal_UINT32_ARRAY<\/STRONG> (Thumb, 46 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c1]	demo.htm	/^<P><STRONG><a name="[c1]"><\/a>tpm_marshal_TPM_STRUCT_VER<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c2]	demo.htm	/^<P><STRONG><a name="[c2]"><\/a>tpm_marshal_BYTE<\/STRONG> (Thumb, 32 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
+[c3]	demo.htm	/^<P><STRONG><a name="[c3]"><\/a>tpm_unmarshal_TPM_STRUCT_VER<\/STRONG> (Thumb, 64 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c4]	demo.htm	/^<P><STRONG><a name="[c4]"><\/a>tpm_unmarshal_BYTE<\/STRONG> (Thumb, 34 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
+[c5]	demo.htm	/^<P><STRONG><a name="[c5]"><\/a>tpm_marshal_TPM_VERSION<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c6]	demo.htm	/^<P><STRONG><a name="[c6]"><\/a>tpm_unmarshal_TPM_VERSION<\/STRONG> (Thumb, 64 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c7]	demo.htm	/^<P><STRONG><a name="[c7]"><\/a>tpm_marshal_BYTE_ARRAY<\/STRONG> (Thumb, 46 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[c8]	demo.htm	/^<P><STRONG><a name="[c8]"><\/a>tpm_marshal_TPM_PCRVALUE_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text))$/;"	a
+[c9]	demo.htm	/^<P><STRONG><a name="[c9]"><\/a>tpm_unmarshal_TPM_PCRVALUE_ARRAY<\/STRONG> (Thumb, 48 bytes, Stack size 40 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[c]	demo.htm	/^<P><STRONG><a name="[c]"><\/a>tpm_engine_first_time<\/STRONG> (Thumb, 22 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[ca]	demo.htm	/^<P><STRONG><a name="[ca]"><\/a>tpm_marshal_TPM_AUTHDATA<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[cb]	demo.htm	/^<P><STRONG><a name="[cb]"><\/a>tpm_marshal_TPM_AUTH<\/STRONG> (Thumb, 56 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[cc]	demo.htm	/^<P><STRONG><a name="[cc]"><\/a>tpm_marshal_BOOL<\/STRONG> (Thumb, 36 bytes, Stack size 0 bytes, tpm_marshalling.o(.text))$/;"	a
+[cd]	demo.htm	/^<P><STRONG><a name="[cd]"><\/a>tpm_unmarshal_TPM_AUTH<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[ce]	demo.htm	/^<P><STRONG><a name="[ce]"><\/a>tpm_unmarshal_BOOL<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[cf]	demo.htm	/^<P><STRONG><a name="[cf]"><\/a>tpm_marshal_TPM_KEY_HANDLE_LIST<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d0]	demo.htm	/^<P><STRONG><a name="[d0]"><\/a>tpm_marshal_UINT16<\/STRONG> (Thumb, 40 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[d1]	demo.htm	/^<P><STRONG><a name="[d1]"><\/a>tpm_marshal_TPM_CHANGEAUTH_VALIDATE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d2]	demo.htm	/^<P><STRONG><a name="[d2]"><\/a>tpm_unmarshal_TPM_CHANGEAUTH_VALIDATE<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d3]	demo.htm	/^<P><STRONG><a name="[d3]"><\/a>tpm_marshal_TPM_COUNTER_VALUE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d4]	demo.htm	/^<P><STRONG><a name="[d4]"><\/a>tpm_unmarshal_TPM_COUNTER_VALUE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d5]	demo.htm	/^<P><STRONG><a name="[d5]"><\/a>tpm_unmarshal_UINT16<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, tpm_marshalling.o(.text))$/;"	a
+[d6]	demo.htm	/^<P><STRONG><a name="[d6]"><\/a>tpm_marshal_TPM_PCR_SELECTION<\/STRONG> (Thumb, 44 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[d7]	demo.htm	/^<P><STRONG><a name="[d7]"><\/a>__aeabi_uidivmod<\/STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text))$/;"	a
+[d8]	demo.htm	/^<P><STRONG><a name="[d8]"><\/a>tpm_unmarshal_TPM_PCR_COMPOSITE<\/STRONG> (Thumb, 72 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[d9]	demo.htm	/^<P><STRONG><a name="[d9]"><\/a>tpm_marshal_TPM_PCR_INFO<\/STRONG> (Thumb, 158 bytes, Stack size 32 bytes, tpm_marshalling.o(.text))$/;"	a
+[d]	demo.htm	/^<P><STRONG><a name="[d]"><\/a>tpm_handle_command<\/STRONG> (Thumb, 82 bytes, Stack size 304 bytes, tpm_cmd_handler.o(.text))$/;"	a
+[da]	demo.htm	/^<P><STRONG><a name="[da]"><\/a>tpm_unmarshal_TPM_PCR_INFO<\/STRONG> (Thumb, 204 bytes, Stack size 32 bytes, tpm_marshalling.o(.text))$/;"	a
+[db]	demo.htm	/^<P><STRONG><a name="[db]"><\/a>tpm_marshal_TPM_PCR_INFO_SHORT<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[dc]	demo.htm	/^<P><STRONG><a name="[dc]"><\/a>tpm_unmarshal_TPM_PCR_INFO_SHORT<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[dd]	demo.htm	/^<P><STRONG><a name="[dd]"><\/a>tpm_marshal_TPM_PCR_ATTRIBUTES<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[de]	demo.htm	/^<P><STRONG><a name="[de]"><\/a>tpm_unmarshal_TPM_PCR_ATTRIBUTES<\/STRONG> (Thumb, 50 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[df]	demo.htm	/^<P><STRONG><a name="[df]"><\/a>tpm_marshal_TPM_STORED_DATA<\/STRONG> (Thumb, 104 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e0]	demo.htm	/^<P><STRONG><a name="[e0]"><\/a>tpm_unmarshal_TPM_STORED_DATA<\/STRONG> (Thumb, 106 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e1]	demo.htm	/^<P><STRONG><a name="[e1]"><\/a>tpm_unmarshal_BLOB<\/STRONG> (Thumb, 42 bytes, Stack size 8 bytes, tpm_marshalling.o(.text))$/;"	a
+[e2]	demo.htm	/^<P><STRONG><a name="[e2]"><\/a>tpm_marshal_TPM_SEALED_DATA<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e3]	demo.htm	/^<P><STRONG><a name="[e3]"><\/a>tpm_unmarshal_TPM_SEALED_DATA<\/STRONG> (Thumb, 102 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e4]	demo.htm	/^<P><STRONG><a name="[e4]"><\/a>tpm_marshal_TPM_SYMMETRIC_KEY<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e5]	demo.htm	/^<P><STRONG><a name="[e5]"><\/a>tpm_unmarshal_TPM_SYMMETRIC_KEY<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[e6]	demo.htm	/^<P><STRONG><a name="[e6]"><\/a>tpm_marshal_TPM_SYMMETRIC_KEY_PARMS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[e7]	demo.htm	/^<P><STRONG><a name="[e7]"><\/a>tpm_unmarshal_TPM_SYMMETRIC_KEY_PARMS<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[e8]	demo.htm	/^<P><STRONG><a name="[e8]"><\/a>tpm_marshal_TPM_RSA_KEY_PARMS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[e9]	demo.htm	/^<P><STRONG><a name="[e9]"><\/a>tpm_unmarshal_TPM_RSA_KEY_PARMS<\/STRONG> (Thumb, 70 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
 [e]	demo.htm	/^<P><STRONG><a name="[e]"><\/a>tpm_engine_final<\/STRONG> (Thumb, 8 bytes, Stack size 8 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[ea]	demo.htm	/^<P><STRONG><a name="[ea]"><\/a>tpm_unmarshal_TPM_IDENTITY_CONTENTS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[eb]	demo.htm	/^<P><STRONG><a name="[eb]"><\/a>tpm_marshal_TPM_CURRENT_TICKS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ec]	demo.htm	/^<P><STRONG><a name="[ec]"><\/a>tpm_unmarshal_TPM_CURRENT_TICKS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ed]	demo.htm	/^<P><STRONG><a name="[ed]"><\/a>tpm_marshal_TPM_TRANSPORT_PUBLIC<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ee]	demo.htm	/^<P><STRONG><a name="[ee]"><\/a>tpm_unmarshal_TPM_TRANSPORT_PUBLIC<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ef]	demo.htm	/^<P><STRONG><a name="[ef]"><\/a>tpm_marshal_TPM_TRANSPORT_INTERNAL<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f0]	demo.htm	/^<P><STRONG><a name="[f0]"><\/a>tpm_unmarshal_TPM_TRANSPORT_INTERNAL<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f1]	demo.htm	/^<P><STRONG><a name="[f1]"><\/a>tpm_marshal_TPM_CONTEXT_BLOB<\/STRONG> (Thumb, 160 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f2]	demo.htm	/^<P><STRONG><a name="[f2]"><\/a>tpm_unmarshal_TPM_CONTEXT_BLOB<\/STRONG> (Thumb, 170 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f3]	demo.htm	/^<P><STRONG><a name="[f3]"><\/a>tpm_marshal_TPM_DAA_BLOB<\/STRONG> (Thumb, 132 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f4]	demo.htm	/^<P><STRONG><a name="[f4]"><\/a>tpm_unmarshal_TPM_DAA_BLOB<\/STRONG> (Thumb, 138 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f5]	demo.htm	/^<P><STRONG><a name="[f5]"><\/a>tpm_marshal_TPM_DAA_SENSITIVE<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f6]	demo.htm	/^<P><STRONG><a name="[f6]"><\/a>tpm_unmarshal_TPM_DAA_SENSITIVE<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f7]	demo.htm	/^<P><STRONG><a name="[f7]"><\/a>tpm_marshal_TPM_DAA_ISSUER<\/STRONG> (Thumb, 136 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f8]	demo.htm	/^<P><STRONG><a name="[f8]"><\/a>tpm_unmarshal_TPM_DAA_ISSUER<\/STRONG> (Thumb, 134 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[f9]	demo.htm	/^<P><STRONG><a name="[f9]"><\/a>tpm_marshal_TPM_DAA_TPM<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[ea]	demo.htm	/^<P><STRONG><a name="[ea]"><\/a>tpm_marshal_TPM_KEY_PARMS<\/STRONG> (Thumb, 126 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[eb]	demo.htm	/^<P><STRONG><a name="[eb]"><\/a>tpm_unmarshal_TPM_KEY_PARMS<\/STRONG> (Thumb, 124 bytes, Stack size 24 bytes, tpm_marshalling.o(.text))$/;"	a
+[ec]	demo.htm	/^<P><STRONG><a name="[ec]"><\/a>tpm_marshal_TPM_STORE_PUBKEY<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[ed]	demo.htm	/^<P><STRONG><a name="[ed]"><\/a>tpm_unmarshal_TPM_STORE_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[ee]	demo.htm	/^<P><STRONG><a name="[ee]"><\/a>tpm_unmarshal_TPM_PUBKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[ef]	demo.htm	/^<P><STRONG><a name="[ef]"><\/a>tpm_marshal_TPM_STORE_PRIVKEY<\/STRONG> (Thumb, 40 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[f0]	demo.htm	/^<P><STRONG><a name="[f0]"><\/a>tpm_unmarshal_TPM_STORE_PRIVKEY<\/STRONG> (Thumb, 38 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[f1]	demo.htm	/^<P><STRONG><a name="[f1]"><\/a>tpm_marshal_TPM_STORE_ASYMKEY<\/STRONG> (Thumb, 86 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[f2]	demo.htm	/^<P><STRONG><a name="[f2]"><\/a>tpm_unmarshal_TPM_STORE_ASYMKEY<\/STRONG> (Thumb, 84 bytes, Stack size 16 bytes, tpm_marshalling.o(.text))$/;"	a
+[f3]	demo.htm	/^<P><STRONG><a name="[f3]"><\/a>tpm_marshal_TPM_MIGRATIONKEYAUTH<\/STRONG> (Thumb, 52 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f4]	demo.htm	/^<P><STRONG><a name="[f4]"><\/a>tpm_unmarshal_TPM_MIGRATIONKEYAUTH<\/STRONG> (Thumb, 54 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f5]	demo.htm	/^<P><STRONG><a name="[f5]"><\/a>tpm_unmarshal_TPM_CERTIFY_INFO<\/STRONG> (Thumb, 260 bytes, Stack size 24 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f6]	demo.htm	/^<P><STRONG><a name="[f6]"><\/a>tpm_marshal_TPM_IDENTITY_CONTENTS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f7]	demo.htm	/^<P><STRONG><a name="[f7]"><\/a>tpm_unmarshal_TPM_IDENTITY_CONTENTS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f8]	demo.htm	/^<P><STRONG><a name="[f8]"><\/a>tpm_marshal_TPM_CURRENT_TICKS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[f9]	demo.htm	/^<P><STRONG><a name="[f9]"><\/a>tpm_unmarshal_TPM_CURRENT_TICKS<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
 [f]	demo.htm	/^<P><STRONG><a name="[f]"><\/a>tpm_unmarshal_UINT32<\/STRONG> (Thumb, 56 bytes, Stack size 24 bytes, tpm_cmd_handler.o(.text))$/;"	a
-[fa]	demo.htm	/^<P><STRONG><a name="[fa]"><\/a>tpm_unmarshal_TPM_DAA_TPM<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[fb]	demo.htm	/^<P><STRONG><a name="[fb]"><\/a>tpm_marshal_TPM_DAA_CONTEXT<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[fc]	demo.htm	/^<P><STRONG><a name="[fc]"><\/a>tpm_unmarshal_TPM_DAA_CONTEXT<\/STRONG> (Thumb, 106 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[fd]	demo.htm	/^<P><STRONG><a name="[fd]"><\/a>tpm_marshal_TPM_DAA_JOINDATA<\/STRONG> (Thumb, 60 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[fe]	demo.htm	/^<P><STRONG><a name="[fe]"><\/a>tpm_unmarshal_TPM_DAA_JOINDATA<\/STRONG> (Thumb, 60 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
-[ff]	demo.htm	/^<P><STRONG><a name="[ff]"><\/a>tpm_marshal_TPM_DAA_SESSION_DATA<\/STRONG> (Thumb, 108 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[fa]	demo.htm	/^<P><STRONG><a name="[fa]"><\/a>tpm_marshal_TPM_TRANSPORT_PUBLIC<\/STRONG> (Thumb, 66 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[fb]	demo.htm	/^<P><STRONG><a name="[fb]"><\/a>tpm_unmarshal_TPM_TRANSPORT_PUBLIC<\/STRONG> (Thumb, 68 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[fc]	demo.htm	/^<P><STRONG><a name="[fc]"><\/a>tpm_marshal_TPM_TRANSPORT_INTERNAL<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[fd]	demo.htm	/^<P><STRONG><a name="[fd]"><\/a>tpm_unmarshal_TPM_TRANSPORT_INTERNAL<\/STRONG> (Thumb, 100 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[fe]	demo.htm	/^<P><STRONG><a name="[fe]"><\/a>tpm_marshal_TPM_CONTEXT_BLOB<\/STRONG> (Thumb, 160 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
+[ff]	demo.htm	/^<P><STRONG><a name="[ff]"><\/a>tpm_unmarshal_TPM_CONTEXT_BLOB<\/STRONG> (Thumb, 170 bytes, Stack size 16 bytes, tpm_marshalling.o(.text), UNUSED)$/;"	a
 _CRYPTO_H	debug/crypto.h	2;"	d
 _FTRX_H	Core/FTRX.h	2;"	d
 _HMAC_H_	crypto/hmac.h	18;"	d
@@ -1518,12 +1541,18 @@ encrypt_with_pubkey	debug/crypto.c	/^int encrypt_with_pubkey(RSA_PUBLIC_KEY *pub
 entityType	tpm/tpm_structures.h	/^  TPM_ENTITY_TYPE entityType;$/;"	m	struct:tdTPM_SESSION_DATA
 errataRev	tpm/tpm_structures.h	/^  BYTE errataRev;$/;"	m	struct:tdTPM_CAP_VERSION_INFO
 et	tpm/tpm_structures.h	/^  TPM_ENTITY_TYPE et;$/;"	m	struct:tdTPM_STORED_DATA
+execute_TPM_CertifyKey	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_CertifyKey(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_CreateWrapKey	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_CreateWrapKey(TPM_REQUEST *req, TPM_RESPONSE *rsp) {$/;"	f	file:
+execute_TPM_Extend	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_Extend(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
+execute_TPM_FlushSpecific	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_FlushSpecific(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_GetPubKey	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_GetPubKey(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_LoadKey	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_LoadKey(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_LoadKey2	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_LoadKey2(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
+execute_TPM_MakeIdentity	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_MakeIdentity(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_OIAP	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_OIAP(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_OSAP	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_OSAP(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
+execute_TPM_PCRRead	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_PCRRead(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
+execute_TPM_Quote	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_Quote(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_SaveState	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_SaveState(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_Startup	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_Startup(TPM_REQUEST *req, TPM_RESPONSE *rsp)$/;"	f	file:
 execute_TPM_TakeOwnership	tpm/tpm_cmd_handler.c	/^static TPM_RESULT execute_TPM_TakeOwnership(TPM_REQUEST *req, TPM_RESPONSE *rsp) {$/;"	f	file:
@@ -1549,6 +1578,7 @@ flags	tpm/tpm_structures.h	/^    TPM_PERMANENT_FLAGS flags;$/;"	m	struct:tdTPM_D
 flags	tpm/tpm_structures.h	/^    TPM_STANY_FLAGS flags;$/;"	m	struct:tdTPM_DATA::__anon18
 flags	tpm/tpm_structures.h	/^    TPM_STCLEAR_FLAGS flags;$/;"	m	struct:tdTPM_DATA::__anon17
 flags	tpm/tpm_structures.h	/^  TPM_FAMILY_FLAGS flags;$/;"	m	struct:tdTPM_FAMILY_TABLE_ENTRY
+free_TPM_CERTIFY_INFO	tpm/tpm_structures.h	1055;"	d
 free_TPM_KEY	tpm/tpm_structures.h	928;"	d
 free_TPM_KEY_PARMS	tpm/tpm_structures.h	882;"	d
 free_TPM_PUBKEY	tpm/tpm_structures.h	941;"	d
@@ -1741,6 +1771,8 @@ printf_STCLEAR_DATA	debug/printfs.c	/^void printf_STCLEAR_DATA() {$/;"	f
 printf_STCLEAR_FLAGS	debug/printfs.c	/^void printf_STCLEAR_FLAGS() {$/;"	f
 printf_TPM_AUTH_REQ	debug/printfs.c	/^void printf_TPM_AUTH_REQ(BYTE **ptr, UINT32 *length) {$/;"	f
 printf_TPM_AUTH_RES	debug/printfs.c	/^void printf_TPM_AUTH_RES(BYTE **ptr, UINT32 *length) {$/;"	f
+printf_TPM_CERIFTY_INFO	debug/printfs.c	/^void printf_TPM_CERIFTY_INFO(TPM_CERTIFY_INFO *certInfo) {$/;"	f
+printf_TPM_KEY	debug/printfs.c	/^void printf_TPM_KEY(TPM_KEY *wrappedKey) {$/;"	f
 printf_TPM_KEY_DATA	debug/printfs.c	/^void printf_TPM_KEY_DATA(TPM_KEY_DATA *key) {$/;"	f
 printf_TPM_REQUEST	debug/printfs.c	/^void printf_TPM_REQUEST(BYTE *buf) {$/;"	f
 printf_TPM_RESPONSE	debug/printfs.c	/^void printf_TPM_RESPONSE(BYTE const *buf, TPM_COMMAND_CODE ordinal) {$/;"	f
@@ -1776,11 +1808,13 @@ read_TPM_PERMANENT_DATA_keys_payload	tpm/tpm_data.c	/^BYTE read_TPM_PERMANENT_DA
 read_TPM_PERMANENT_DATA_keys_pubkeyFileid	tpm/tpm_data.c	/^UINT16 read_TPM_PERMANENT_DATA_keys_pubkeyFileid(UINT16 index) {$/;"	f
 read_TPM_PERMANENT_DATA_keys_usageAuth	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_keys_usageAuth(UINT16 index, TPM_SECRET *usageAuth) {$/;"	f
 read_TPM_PERMANENT_DATA_ownerAuth	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_ownerAuth(TPM_SECRET *ownerAuth) {$/;"	f
-read_TPM_PERMANENT_DATA_pcrAttrib	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttribs) {$/;"	f
+read_TPM_PERMANENT_DATA_pcrAttrib	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib) {$/;"	f
+read_TPM_PERMANENT_DATA_pcrAttribs	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttribs) {$/;"	f
+read_TPM_PERMANENT_DATA_pcrValue	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue) {$/;"	f
 read_TPM_PERMANENT_DATA_rngState	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_rngState(BYTE *rngState) {$/;"	f
 read_TPM_PERMANENT_DATA_srk	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_srk(TPM_KEY_DATA *srk) {$/;"	f
 read_TPM_PERMANENT_DATA_srk_payload	tpm/tpm_data.c	/^BYTE read_TPM_PERMANENT_DATA_srk_payload() {$/;"	f
-read_TPM_PERMANENT_DATA_srk_usageAuth	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET usageAuth) {$/;"	f
+read_TPM_PERMANENT_DATA_srk_usageAuth	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_srk_usageAuth(TPM_SECRET *usageAuth) {$/;"	f
 read_TPM_PERMANENT_DATA_tag	tpm/tpm_data.c	/^TPM_STRUCTURE_TAG read_TPM_PERMANENT_DATA_tag() {$/;"	f
 read_TPM_PERMANENT_DATA_tpmProof	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_tpmProof(TPM_NONCE *tpmProof) {$/;"	f
 read_TPM_PERMANENT_DATA_version	tpm/tpm_data.c	/^int read_TPM_PERMANENT_DATA_version(TPM_VERSION *version) {$/;"	f
@@ -1818,7 +1852,10 @@ run	debug/test.c	/^void run() {$/;"	f
 run_TPM_OIAP	debug/test.c	/^void run_TPM_OIAP() {$/;"	f
 run_TPM_TakeOwnership	debug/test.c	/^void run_TPM_TakeOwnership() {$/;"	f
 run_bin_file	debug/crypto.c	/^void run_bin_file(unsigned char *InOutBuf, int size) {$/;"	f
+run_certifiy_key	debug/test.c	/^void run_certifiy_key() {$/;"	f
 run_first_time	debug/test.c	/^void run_first_time() {$/;"	f
+run_flush	debug/test.c	/^void run_flush() {$/;"	f
+run_makeidentity	debug/test.c	/^void run_makeidentity() {$/;"	f
 run_unbind_data	debug/test.c	/^void run_unbind_data() {$/;"	f
 save_flags	tpm/tpm_data.c	/^int save_flags(void) {$/;"	f
 sealInfo	tpm/tpm_structures.h	/^  TPM_PCR_INFO sealInfo;$/;"	m	struct:tdTPM_STORED_DATA
@@ -1933,11 +1970,16 @@ state	tpm/tpm_structures.h	/^  TPM_DA_STATE state;$/;"	m	struct:tdTPM_DA_INFO_LI
 stclear	tpm/tpm_structures.h	/^  } stclear;$/;"	m	struct:tdTPM_DATA	typeref:struct:tdTPM_DATA::__anon17
 stclearFlags	tpm/tpm_data.c	/^TPM_STCLEAR_FLAGS stclearFlags;$/;"	v
 storedDigest	tpm/tpm_structures.h	/^  TPM_DIGEST storedDigest;$/;"	m	struct:tdTPM_SEALED_DATA
+stuff_inoutbuf_certify	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_certify($/;"	f
 stuff_inoutbuf_createcrapkey	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_createcrapkey(unsigned char *InOutBuf, int buf_size, TPM_NONCE *nonceOddOSAP, TPM_NONCE *nonceEvenOSAP, TPM_NONCE *nonceEven, TPM_AUTHHANDLE authHandle) {$/;"	f
 stuff_inoutbuf_firsttime	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_firsttime(unsigned char *InOutBuf, int size) {$/;"	f
+stuff_inoutbuf_flush	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_flush(unsigned char *InOutBuf, int buf_size, TPM_HANDLE handle, TPM_RESOURCE_TYPE resourceType) {$/;"	f
 stuff_inoutbuf_loadkey	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_loadkey(unsigned char *InOutBuf, int buf_size, TPM_KEY *inKey, TPM_AUTHHANDLE authHandle, TPM_NONCE *nonceEven) {$/;"	f
+stuff_inoutbuf_loadkey_new	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_loadkey_new(unsigned char *InOutBuf, int buf_size, TPM_KEY *inKey, TPM_SECRET secret, TPM_AUTHHANDLE authHandle, TPM_NONCE *nonceEven) {$/;"	f
+stuff_inoutbuf_makeidentity	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_makeidentity(unsigned char *InOutBuf, int buf_size, TPM_AUTHHANDLE srkAuthHandle, TPM_NONCE *srkNonceEven, TPM_NONCE *nonceOddOSAP, TPM_NONCE *nonceEvenOSAP, TPM_NONCE *nonceEven, TPM_AUTHHANDLE authHandle)  {$/;"	f
 stuff_inoutbuf_oiap	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_oiap(unsigned char *InOutBuf, int size) {$/;"	f
 stuff_inoutbuf_osap	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_osap(unsigned char *InOutBuf, int buf_size) {$/;"	f
+stuff_inoutbuf_osap_new	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_osap_new(unsigned char *InOutBuf, int buf_size, TPM_ENTITY_TYPE entityType, UINT32 entityValue) {$/;"	f
 stuff_inoutbuf_ownership	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_ownership(unsigned char *InOutBuf, int buf_size, TPM_AUTHHANDLE authHandle, TPM_NONCE *nonceEven) {$/;"	f
 stuff_inoutbuf_startup	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_startup(unsigned char *InOutBuf, int size) {$/;"	f
 stuff_inoutbuf_unbind	debug/stuff_inoutbuf.c	/^void stuff_inoutbuf_unbind(unsigned char *InOutBuf, int buf_size, TPM_AUTHHANDLE authHandle, TPM_NONCE *nonceEven, TPM_KEY_HANDLE keyHandle, BYTE *inData, UINT32 inDataSize) {$/;"	f
@@ -2094,11 +2136,14 @@ tpm_check_status_and_mode	tpm/tpm_cmd_handler.c	/^static TPM_RESULT tpm_check_st
 tpm_compute_in_param_digest	tpm/tpm_cmd_handler.c	/^void tpm_compute_in_param_digest(TPM_REQUEST *req)$/;"	f
 tpm_compute_key_digest	tpm/tpm_storage.c	/^int tpm_compute_key_digest(TPM_KEY *key, TPM_DIGEST *digest)$/;"	f
 tpm_compute_out_param_digest	tpm/tpm_cmd_handler.c	/^void tpm_compute_out_param_digest(TPM_COMMAND_CODE ordinal, TPM_RESPONSE *rsp)$/;"	f
+tpm_compute_pcr_digest	tpm/tpm_integrity.c	/^TPM_RESULT tpm_compute_pcr_digest(TPM_PCR_SELECTION *pcrSelection, $/;"	f
 tpm_decrypt_auth_secret	tpm/tpm_authorization.c	/^void tpm_decrypt_auth_secret(TPM_ENCAUTH encAuth, TPM_SECRET secret,$/;"	f
 tpm_decrypt_private_key	tpm/tpm_storage.c	/^int tpm_decrypt_private_key(TPM_KEY_DATA *key, BYTE *enc, UINT32 enc_size, TPM_STORE_ASYMKEY *store)$/;"	f
+tpm_decrypt_private_key_new	tpm/tpm_storage.c	/^int tpm_decrypt_private_key_new(UINT16 privkeyFileid, BYTE *enc, UINT32 enc_size, TPM_STORE_ASYMKEY *store)$/;"	f
 tpm_emulator_shutdown	tpm/tpm_cmd_handler.c	/^int tpm_emulator_shutdown()$/;"	f
 tpm_encrypt_auth_secret	debug/crypto.c	/^void tpm_encrypt_auth_secret(TPM_SECRET plainAuth, TPM_SECRET secret,$/;"	f
 tpm_encrypt_private_key	tpm/tpm_storage.c	/^int tpm_encrypt_private_key(TPM_KEY_DATA *key, TPM_STORE_ASYMKEY *store, BYTE *enc, UINT32 *enc_size)$/;"	f
+tpm_encrypt_private_key_new	tpm/tpm_storage.c	/^int tpm_encrypt_private_key_new(UINT16 pubkeyFileid, TPM_STORE_ASYMKEY *store, BYTE *enc, UINT32 *enc_size)$/;"	f
 tpm_engine_final	tpm/tpm_cmd_handler.c	/^int tpm_engine_final() {$/;"	f
 tpm_engine_first_time	tpm/tpm_cmd_handler.c	/^void tpm_engine_first_time() {$/;"	f
 tpm_engine_init	tpm/tpm_cmd_handler.c	/^int tpm_engine_init() {$/;"	f
@@ -2252,6 +2297,7 @@ tpm_marshal_UINT32_ARRAY	tpm/tpm_marshalling.c	/^int tpm_marshal_UINT32_ARRAY(BY
 tpm_rsa_decrypt	tpm/tpm_storage.c	/^int tpm_rsa_decrypt(UINT16 keyFileid, BYTE *inData, UINT32 inDataSize, BYTE *outData, UINT32 *outDataSize) {$/;"	f
 tpm_rsa_import_key	tpm/tpm_storage.c	/^int tpm_rsa_import_key(TPM_KEY_DATA *key, TPM_STORE_PRIVKEY *prikey, TPM_STORE_PUBKEY *pubkey) {$/;"	f
 tpm_setup_error_response	tpm/tpm_cmd_handler.c	/^static void tpm_setup_error_response(TPM_RESULT res, TPM_RESPONSE *rsp)$/;"	f	file:
+tpm_setup_key_parms	tpm/tpm_crypto.c	/^int tpm_setup_key_parms(TPM_KEY_DATA *key, TPM_KEY_PARMS *parms)$/;"	f
 tpm_setup_rsp_auth	tpm/tpm_cmd_handler.c	/^static void tpm_setup_rsp_auth(TPM_COMMAND_CODE ordinal, TPM_RESPONSE *rsp) $/;"	f	file:
 tpm_sha1_ctx_t	crypto/sha1.h	/^} tpm_sha1_ctx_t;$/;"	t	typeref:struct:__anon14
 tpm_sha1_final	crypto/sha1.c	/^void tpm_sha1_final(tpm_sha1_ctx_t *ctx, uint8_t digest[SHA1_DIGEST_LENGTH])$/;"	f
@@ -2438,7 +2484,8 @@ write_TPM_PERMANENT_DATA_nvDataSize	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DAT
 write_TPM_PERMANENT_DATA_nvData_Stuff	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_nvData_Stuff(BYTE stuff) {$/;"	f
 write_TPM_PERMANENT_DATA_nvStorage	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_nvStorage(UINT16 index, TPM_NV_DATA_SENSITIVE *nvStorage) {$/;"	f
 write_TPM_PERMANENT_DATA_ownerAuth	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_ownerAuth(TPM_SECRET *ownerAuth) {$/;"	f
-write_TPM_PERMANENT_DATA_pcrAttrib	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_pcrAttrib(TPM_PCR_ATTRIBUTES *pcrAttribs) {$/;"	f
+write_TPM_PERMANENT_DATA_pcrAttrib	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_pcrAttrib(UINT16 index, TPM_PCR_ATTRIBUTES *pcrAttrib) {$/;"	f
+write_TPM_PERMANENT_DATA_pcrAttribs	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_pcrAttribs(TPM_PCR_ATTRIBUTES *pcrAttribs) {$/;"	f
 write_TPM_PERMANENT_DATA_pcrValue	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_pcrValue(UINT16 index, TPM_PCRVALUE *pcrValue) {$/;"	f
 write_TPM_PERMANENT_DATA_rngState	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_rngState(BYTE *rngState) {$/;"	f
 write_TPM_PERMANENT_DATA_srk	tpm/tpm_data.c	/^int write_TPM_PERMANENT_DATA_srk(TPM_KEY_DATA *srk) {$/;"	f

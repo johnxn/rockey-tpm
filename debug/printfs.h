@@ -34,5 +34,8 @@ void printf_sessions(TPM_SESSION_DATA *sessions);
 void printf_TPM_SESSION_DATA(TPM_SESSION_DATA *session);
 void printf_TPM_KEY_DATA(TPM_KEY_DATA *key);
 void printf_TPM_KEY(TPM_KEY *wrappedKey);
+void printf_TPM_CERIFTY_INFO(TPM_CERTIFY_INFO *certInfo);
+void printf_TPM_PCR_SELECTION(TPM_PCR_SELECTION *pcrSelection);
+void printf_TPM_PCR_COMPOSITE(TPM_PCR_COMPOSITE *pcrComposite);
 
 #endif /* _PRINTFS_H */

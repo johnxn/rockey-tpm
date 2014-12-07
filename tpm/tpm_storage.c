@@ -40,15 +40,16 @@ TPM_KEY_HANDLE tpm_get_free_key(void)
 }
 
 int tpm_rsa_import_key(TPM_KEY_DATA *key, TPM_STORE_PRIVKEY *prikey, TPM_STORE_PUBKEY *pubkey) {
-     if (prikey->keyLength != 256 || pubkey->keyLength != sizeof(RSA_PUBLIC_KEY)) {
-         return -1;
-     }
-     memcpy(ExtendBuf, pubkey->key, pubkey->keyLength);
-     memcpy(ExtendBuf+pubkey->keyLength, prikey->key, prikey->keyLength);
-     if (write_file(FILE_PRIKEY_RSA, key->keyFileid, 0, sizeof(RSA_PRIVATE_KEY), ExtendBuf) != ERR_SUCCESS
-        || write_file(FILE_DATA, key->pubkeyFileid, 0, sizeof(RSA_PUBLIC_KEY), pubkey->key) != ERR_SUCCESS) 
-         return -1;
-     return 0;
+    if (prikey->keyLength != 256 || pubkey->keyLength != sizeof(RSA_PUBLIC_KEY)) {
+        return -1;
+    }
+    memcpy(ExtendBuf, pubkey->key, pubkey->keyLength);
+    memcpy(ExtendBuf+pubkey->keyLength, prikey->key, prikey->keyLength);
+    if (write_file(FILE_PRIKEY_RSA, key->keyFileid, 0, sizeof(RSA_PRIVATE_KEY), ExtendBuf) != ERR_SUCCESS
+            || write_file(FILE_DATA, key->pubkeyFileid, 0, sizeof(RSA_PUBLIC_KEY), pubkey->key) != ERR_SUCCESS) {
+        return -1;
+    }
+    return 0;
 }
 
 int tpm_encrypt_private_key(TPM_KEY_DATA *key, TPM_STORE_ASYMKEY *store, BYTE *enc, UINT32 *enc_size)
@@ -77,6 +78,33 @@ int tpm_encrypt_private_key(TPM_KEY_DATA *key, TPM_STORE_ASYMKEY *store, BYTE *e
   return 0;
 }
 
+int tpm_encrypt_private_key_new(UINT16 pubkeyFileid, TPM_STORE_ASYMKEY *store, BYTE *enc, UINT32 *enc_size)
+{
+ UINT16 dataSize;
+/*
+ UINT32 data = 0xffffffff;
+ if (rsa_pri(key->keyFileid, (BYTE *)&data, 4, enc, &dataSize, MODE_ENCODE) != ERR_SUCCESS) return -1;
+ return 0;
+ // if (rsa_pri(key->keyFileid, store->usageAuth, 20, enc+256, &dataSize, MODE_ENCODE) != ERR_SUCCESS) return 0x01;
+ // */
+  UINT32 size, len;
+  BYTE *buf, *ptr, *public;
+  /* size is 321 */
+  size = len = sizeof_TPM_STORE_ASYMKEY((*store));
+  ptr = ExtendBuf;
+  if (tpm_marshal_TPM_STORE_ASYMKEY(&ptr, &len, store)) {
+    return -1;
+  }
+  buf = InOutBuf + sizeof(RSA_PUBLIC_KEY);
+  memcpy(buf, ExtendBuf, size);
+  public = InOutBuf + sizeof(RSA_PUBLIC_KEY) + size + 7; // memory allginment
+  if (read_file(pubkeyFileid, 0, sizeof(RSA_PUBLIC_KEY), public) != ERR_SUCCESS) return -1;
+  if (rsa_pub(buf, size / 2, (RSA_PUBLIC_KEY *)public, enc, &dataSize, MODE_ENCODE) != ERR_SUCCESS ||
+      rsa_pub(buf+size/2, size - size/2, (RSA_PUBLIC_KEY *)public, enc+256, &dataSize, MODE_ENCODE) != ERR_SUCCESS) return -1;
+  return 0;
+}
+
+
 int tpm_decrypt_private_key(TPM_KEY_DATA *key, BYTE *enc, UINT32 enc_size, TPM_STORE_ASYMKEY *store)
 {
   BYTE *buf, *ptr;
@@ -89,6 +117,28 @@ int tpm_decrypt_private_key(TPM_KEY_DATA *key, BYTE *enc, UINT32 enc_size, TPM_S
   }
   if (rsa_pri(key->keyFileid, enc, 256, buf, &part1_size, MODE_DECODE) != ERR_SUCCESS ||
       rsa_pri(key->keyFileid, enc+256, 256, buf+part1_size, &part2_size, MODE_DECODE) != ERR_SUCCESS) {
+      free(buf);
+      return -1;
+  }
+  if (tpm_unmarshal_TPM_STORE_ASYMKEY(&ptr, (UINT32 *)&enc_size, store) != 0) {
+    free(buf);
+    return -1;
+  }
+  return 0;
+}
+
+int tpm_decrypt_private_key_new(UINT16 privkeyFileid, BYTE *enc, UINT32 enc_size, TPM_STORE_ASYMKEY *store)
+{
+  BYTE *buf, *ptr;
+  UINT16 part1_size;
+  UINT16 part2_size;
+  /* enc_size should be 321 */
+  buf = ptr = malloc(enc_size);
+  if (buf == NULL) {
+    return -1;
+  }
+  if (rsa_pri(privkeyFileid, enc, 256, buf, &part1_size, MODE_DECODE) != ERR_SUCCESS ||
+      rsa_pri(privkeyFileid, enc+256, 256, buf+part1_size, &part2_size, MODE_DECODE) != ERR_SUCCESS) {
       free(buf);
       return -1;
   }
@@ -598,11 +648,13 @@ TPM_RESULT TPM_LoadKey(TPM_KEY_HANDLE parentHandle, TPM_KEY *inKey,
   /* import key */
   if (tpm_verify_key_digest(inKey, &store.pubDataDigest) != 0) {
     memset(&key, 0, sizeof(TPM_KEY_DATA));
+    write_TPM_PERMANENT_DATA_keys_payload(key_index, 0);
     return TPM_FAIL;
   }
 
-  if (tpm_rsa_import_key(&key, &store.privKey, &inKey->pubKey)) {
+  if (tpm_rsa_import_key(&key, &store.privKey, &inKey->pubKey) != 0) {
     memset(&key, 0, sizeof(TPM_KEY_DATA));
+    write_TPM_PERMANENT_DATA_keys_payload(key_index, 0);
     return TPM_FAIL;
   }
   /* verify tpmProof */
@@ -611,6 +663,7 @@ TPM_RESULT TPM_LoadKey(TPM_KEY_HANDLE parentHandle, TPM_KEY *inKey,
     if (memcmp(tpmProof.nonce,
                store.migrationAuth, sizeof(TPM_NONCE))) {
       memset(&key, 0, sizeof(TPM_KEY_DATA));
+      write_TPM_PERMANENT_DATA_keys_payload(key_index, 0);
       return TPM_FAIL;
     }
   }
